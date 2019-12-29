@@ -18,3 +18,12 @@
 
 * https://www.theverge.com/2019/2/25/18239860/microsoft-kinect-azure-dk-hands-on-mwc-2019
 * https://www.usine-digitale.fr/article/microsoft-veut-s-imposer-dans-la-perception-appliquee-a-l-iot-avec-azure-kinect.N813495
+
+
+
+
+/*************************************/
+          29/12/2019  17:31
+/*************************************/
+
+* https://www.webassign.net/question_assets/unccolphysmechl1/measurements/manual.html

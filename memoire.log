@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7140 64-bit) (preloaded format=pdflatex 2019.8.4)  29 DEC 2019 10:46
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7140 64-bit) (preloaded format=pdflatex 2019.8.4)  29 DEC 2019 18:00
 entering extended mode
 **./memoire.tex
 (memoire.tex
@@ -936,134 +936,151 @@ File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 ]
 Chapitre 1.
 [3]
-<images/Asus.png, id=66, 983.17313pt x 432.86719pt>
+Underfull \hbox (badness 10000) in paragraph at lines 135--137
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 135--137
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 135--137
+
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [4]
+<images/Asus.png, id=69, 983.17313pt x 432.86719pt>
 File: images/Asus.png Graphic file (type png)
 <use images/Asus.png>
-Package pdftex.def Info: images/Asus.png  used on input line 143.
+Package pdftex.def Info: images/Asus.png  used on input line 150.
 (pdftex.def)             Requested size: 491.58536pt x 216.43306pt.
 
-Overfull \hbox (82.8563pt too wide) in paragraph at lines 142--144
+Overfull \hbox (82.8563pt too wide) in paragraph at lines 149--151
 []  []
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 142--144
+Underfull \hbox (badness 10000) in paragraph at lines 149--151
 
  []
 
-[4]
-<images/interference.png, id=70, 684.5575pt x 124.465pt>
+[5 <./images/Asus.png>]
+<images/interference.png, id=74, 684.5575pt x 124.465pt>
 File: images/interference.png Graphic file (type png)
 <use images/interference.png>
-Package pdftex.def Info: images/interference.png  used on input line 159.
+Package pdftex.def Info: images/interference.png  used on input line 166.
 (pdftex.def)             Requested size: 342.27791pt x 62.23235pt.
 
 
-LaTeX Warning: Citation 'RAFIBAKHSH15' on page 5 undefined on input line 163.
+LaTeX Warning: Citation 'RAFIBAKHSH15' on page 6 undefined on input line 170.
 
 
-LaTeX Warning: Citation 'MaimoneFuchs15' on page 5 undefined on input line 163.
+LaTeX Warning: Citation 'MaimoneFuchs15' on page 6 undefined on input line 170.
 
 
 
-LaTeX Warning: Citation 'KentonCraigMace12' on page 5 undefined on input line 1
-63.
+LaTeX Warning: Citation 'KentonCraigMace12' on page 6 undefined on input line 1
+70.
 
-[5 <./images/Asus.png> <./images/interference.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 169--170
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 169--170
+[6 <./images/interference.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 176--177
 
  []
 
-[6]
+
+Underfull \hbox (badness 10000) in paragraph at lines 176--177
+
+ []
+
 <images/focalLength.png, id=80, 958.3303pt x 545.78906pt>
 File: images/focalLength.png Graphic file (type png)
 <use images/focalLength.png>
-Package pdftex.def Info: images/focalLength.png  used on input line 180.
+Package pdftex.def Info: images/focalLength.png  used on input line 187.
 (pdftex.def)             Requested size: 479.16399pt x 272.89386pt.
 
-Overfull \hbox (6.41621pt too wide) in paragraph at lines 179--181
+Overfull \hbox (6.41621pt too wide) in paragraph at lines 186--188
 []  []
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 179--181
+Underfull \hbox (badness 10000) in paragraph at lines 186--188
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 172--183
+Underfull \hbox (badness 10000) in paragraph at lines 179--190
+
+ []
+
+[7]
+Underfull \hbox (badness 10000) in paragraph at lines 194--199
 
  []
 
 
-Underfull \vbox (badness 4981) has occurred while \output is active []
-
- [7 <./images/focalLength.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 187--192
+Underfull \hbox (badness 10000) in paragraph at lines 203--204
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 196--197
+Underfull \vbox (badness 4036) has occurred while \output is active []
 
- []
-
-[8] [9] [10
+ [8 <./images/focalLength.png>] [9] [10
 
 ]
 Chapitre 2.
 <images/realModel.png, id=99, 571.38469pt x 429.85594pt>
 File: images/realModel.png Graphic file (type png)
 <use images/realModel.png>
-Package pdftex.def Info: images/realModel.png  used on input line 211.
+Package pdftex.def Info: images/realModel.png  used on input line 218.
 (pdftex.def)             Requested size: 285.69164pt x 214.92744pt.
 [11 <./images/realModel.png>]
 <images/GUI.png, id=104, 359.84438pt x 311.66437pt>
 File: images/GUI.png Graphic file (type png)
 <use images/GUI.png>
-Package pdftex.def Info: images/GUI.png  used on input line 226.
+Package pdftex.def Info: images/GUI.png  used on input line 233.
 (pdftex.def)             Requested size: 179.92174pt x 155.8318pt.
 
-Overfull \hbox (2.25552pt too wide) in paragraph at lines 221--229
+Overfull \hbox (2.25552pt too wide) in paragraph at lines 228--236
 \T1/cmr/m/n/12 Gui dis-po-nible sur Gi-tHub sur le lien sui-vant $\T1/cmtt/m/n/
 12 https : / / github . com / ocornut /
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 232--232
+Underfull \hbox (badness 10000) in paragraph at lines 239--239
 [][][]\T1/cmr/m/n/10 .[]Nous nous sommes for-te-ment ins-pi-rés du tra-vail réa
 -lisé par
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 232--232
+Underfull \hbox (badness 10000) in paragraph at lines 239--239
 \T1/cmr/m/n/10 Adrian RO-SE-BROCK, Ph.D en vi-sion par or-di-na-teur, dis-po-ni
 ble
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 232--232
+Underfull \hbox (badness 10000) in paragraph at lines 239--239
 \T1/cmr/m/n/10 sur le lien sui-vant : $\T1/cmtt/m/n/10 https : / / www . pyimag
 esearch . com / 2015 / 01 / 26 /
  []
 
 [12]
-Underfull \hbox (badness 10000) in paragraph at lines 233--236
+Underfull \hbox (badness 10000) in paragraph at lines 240--243
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 233--236
+Underfull \hbox (badness 10000) in paragraph at lines 240--243
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 233--236
+Underfull \hbox (badness 10000) in paragraph at lines 240--243
 
  []
 
@@ -1071,16 +1088,16 @@ Underfull \hbox (badness 10000) in paragraph at lines 233--236
 <images/modelDetected.png, id=114, 122.70844pt x 89.58469pt>
 File: images/modelDetected.png Graphic file (type png)
 <use images/modelDetected.png>
-Package pdftex.def Info: images/modelDetected.png  used on input line 240.
+Package pdftex.def Info: images/modelDetected.png  used on input line 247.
 (pdftex.def)             Requested size: 122.70813pt x 89.58446pt.
 
-Overfull \hbox (14.31366pt too wide) in paragraph at lines 245--245
+Overfull \hbox (14.31366pt too wide) in paragraph at lines 252--252
 []\T1/cmr/m/n/12 Pour celle-ci, nous ré-cu-pé-rons les va-leurs de la carte de 
 pro-fon-deur d'OpenGL
  []
 
 
-Underfull \hbox (badness 1112) in paragraph at lines 245--245
+Underfull \hbox (badness 1112) in paragraph at lines 252--252
 \T1/cmr/m/n/10 er-reurs tout comme le RMSE vu plus haut. Consul-ter cette page 
 web pour un
  []
@@ -1089,35 +1106,35 @@ web pour un
 <images/report.png, id=121, 2007.5pt x 2007.5pt>
 File: images/report.png Graphic file (type png)
 <use images/report.png>
-Package pdftex.def Info: images/report.png  used on input line 252.
+Package pdftex.def Info: images/report.png  used on input line 259.
 (pdftex.def)             Requested size: 501.87378pt x 501.87378pt.
 
-Overfull \hbox (111.87378pt too wide) in paragraph at lines 252--253
+Overfull \hbox (111.87378pt too wide) in paragraph at lines 259--260
 [][]
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 252--253
+Underfull \hbox (badness 10000) in paragraph at lines 259--260
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 266--267
+Underfull \hbox (badness 10000) in paragraph at lines 273--274
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 266--267
+Underfull \hbox (badness 10000) in paragraph at lines 273--274
 
  []
 
 [15] [16 <./images/report.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 298--299
+Underfull \hbox (badness 10000) in paragraph at lines 305--306
 
  []
 
 
-Overfull \hbox (52.4193pt too wide) in paragraph at lines 305--433
+Overfull \hbox (52.4193pt too wide) in paragraph at lines 312--440
  [][] 
  []
 
@@ -1139,14 +1156,11 @@ Chapitre 3.
 ]
 Chapitre 4.
 
-LaTeX Warning: Empty bibliography on input line 457.
+LaTeX Warning: Empty bibliography on input line 464.
 
 [21] (memoire.aux)
 
 LaTeX Warning: There were undefined references.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
 
 Package biblatex Warning: Please (re)run Biber on the file:
@@ -1159,12 +1173,12 @@ Package logreq Info: Writing requests to 'memoire.run.xml'.
  ) 
 Here is how much of TeX's memory you used:
  13729 strings out of 492895
- 229381 string characters out of 3120467
- 691915 words of memory out of 3000000
+ 229549 string characters out of 3120467
+ 691916 words of memory out of 3000000
  17437 multiletter control sequences out of 15000+200000
  23764 words of font info for 61 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 35i,9n,39p,1797b,1869s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 35i,9n,39p,1797b,1851s stack positions out of 5000i,500n,10000p,200000b,50000s
  <C:\Users\BelkaYasmine\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/
 dpi600\ecti1000.pk> <C:\Users\BelkaYasmine\AppData\Local\MiKTeX\2.9\fonts/pk/lj
 four/jknappen/ec/dpi600\tcrm1200.pk> <C:\Users\BelkaYasmine\AppData\Local\MiKTe
@@ -1192,9 +1206,9 @@ nts/cm/cmr10.pfb><C:/Users/BelkaYasmine/AppData/Local/Programs/MiKTeX 2.9/fonts
 /type1/public/amsfonts/cm/cmr12.pfb><C:/Users/BelkaYasmine/AppData/Local/Progra
 ms/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/BelkaYasmine/Ap
 pData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
-Output written on memoire.pdf (33 pages, 2545494 bytes).
+Output written on memoire.pdf (33 pages, 2546997 bytes).
 PDF statistics:
- 784 PDF objects out of 1000 (max. 8388607)
+ 785 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  41 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -1,0 +1,20 @@
+*https://pdfs.semanticscholar.org/7bcc/aa4c7afb021d8606f523738e97842b90c1ed.pdf --> infrared to depth
+
++ références données dans ce papier chapitre "Related work"(https://www.researchgate.net/publication/269931108_IR_Stereo_Kinect_Improving_Depth_Images_by_Combining_StructuredLight_with_IR_Stereo#pf2) ==> for whole article
+*https://www.e-consystems.com/blog/camera/what-is-a-stereo-vision-camera/ ==> stereo
+*https://tel.archives-ouvertes.fr/tel-00464265/document ==> vision binoculaire
+*https://opto.ca/fr/health-library/vision-binoculaire
+*http://thesesups.ups-tlse.fr/1369/1/2010TOU30324.pdf ==> stéréo
+
+*http://master-ivi.univ-lille1.fr/fichiers/Cours/VisA-semaine-3-dense-stereovision.pdf <= titre complet a get
+
+* https://photo.stackexchange.com/questions/41273/how-to-calculate-the-fov-in-degrees-from-focal-length-or-distance ==> get the focal length from the fov : NO
+* http://master-ivi.univ-lille1.fr/fichiers/Cours/Vind_Cours_07_Dispositif-optique.pdf ==> get the figure of fov
+* https://robotics.stackexchange.com/questions/19011/what-is-the-relation-between-fov-focal-length-and-sensor-size-in-a-pin-hole-cam ==> formula focal
+* https://www.researchgate.net/post/Real_depth_using_disparity_map => relation disoarity and depth
+* http://jjst.media/wp-content/uploads/2016/05/2014_1_Characterization_Asus_Xtion.pdf (Asus et OpenNI) --> Pourrait être intéressant pour la comparaison
+* https://en.wikipedia.org/wiki/Kinect
+* https://silviogiancola.com/publication/2016-01-21-metrological-analysis-kinect-v2/Paper.pdf 
+
+* https://www.theverge.com/2019/2/25/18239860/microsoft-kinect-azure-dk-hands-on-mwc-2019
+* https://www.usine-digitale.fr/article/microsoft-veut-s-imposer-dans-la-perception-appliquee-a-l-iot-avec-azure-kinect.N813495

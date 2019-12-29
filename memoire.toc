@@ -1,0 +1,68 @@
+\boolfalse {citerequest}\boolfalse {citetracker}\boolfalse {pagetracker}\boolfalse {backtracker}\relax 
+\babel@toc {french}{}
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{D\IeC {\'e}dicaces}{i}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{Remerciements}{iii}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{R\IeC {\'e}sum\IeC {\'e}}{v}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{Introduction}{1}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{\numberline {1}\IeC {\'E}tat de l'art}{3}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {1.1}Description d'une cam\IeC {\'e}ra RGB-D}{3}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {1.2}Mod\IeC {\`e}les existants}{3}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {1.3}Mesure d'erreurs}{4}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {1.3.1}Mesure d'erreurs \IeC {\`a} l'aide de mat\IeC {\'e}riels}{4}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {1.3.2}Mesure d'erreurs \IeC {\`a} l'aide de moyens th\IeC {\'e}oriques}{4}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {1.4}Technologies utilis\IeC {\'e}es pour la depth}{4}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {1.4.1}Infrarouge}{4}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {1.4.2}St\IeC {\'e}r\IeC {\'e}o-vision}{6}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{Carte de disparit\IeC {\'e}s}{6}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {1.5}Kinect V2 et Kinect V3}{8}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {1.5.1}Kinect V2}{8}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {1.5.2}Kinect V3}{8}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{Kinect V2 Vs Kinect V3}{8}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{\numberline {2}Notre outil pour la qualification}{11}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {2.1}Description de l'application}{11}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {2.1.1}Premi\IeC {\`e}re partie: Affichage de la sc\IeC {\`e}ne capt\IeC {\'e}e }{12}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {2.1.2}Seconde partie: Interface graphique}{12}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{D\IeC {\'e}tection du mod\IeC {\`e}le r\IeC {\'e}el}{12}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{Tests de mesures et r\IeC {\'e}daction de rapport}{14}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {2.2}Conception du mod\IeC {\`e}le r\IeC {\'e}el et du mod\IeC {\`e}le virtuel}{15}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {2.2.1}Conception du mod\IeC {\`e}le r\IeC {\'e}el}{15}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {2.2.2}Conception du mod\IeC {\`e}le virtuel}{15}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {2.3}Comparaison de la depth OpenGL avec la depth de la cam\IeC {\'e}ra RGB-D}{15}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {2.3.1}R\IeC {\'e}sultats obtenus}{17}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {2.3.2}R\IeC {\'e}sultats attendus}{18}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{\numberline {3}Cas pratiques de qualification}{19}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {3.1}Asus Xtion Pro Live}{19}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{\numberline {4}Conclusion et Perspectives}{21}% 

@@ -128,21 +128,201 @@ Dans ce passage, nous allons décrire notre outil conçu pour qualifier les cam�
 \subsection{Seconde partie: Interface graphique}
 
 
-\section{Conception du modèle réel et du modèle virtuel}
-
-\section{Comparaison de la depth OpenGL avec la depth de la caméra RGB-D}
-Dans ce passage, nous exposons certains des résultats obtenus ainsi que les résultats attendus avec la caméra Asus.
-
-\subsection{Résultats obtenus}
-
-\subsection{Résultats attendus}
-
 
 \chapter{Cas pratiques de qualification}
 
-\section{Modèle 3D}
-\section{La POC}
+\section{Conception du modèle réel et du modèle virtuel}
+\subsection{Conception du modèle réel}
+Pour fabriquer le modèle réel, nous avons décidé d'opter pour le polystyrène pour les composants du modèle et du carton pour sa base. Cette dernière sera par la suite recouverte de papier blanc. Les composants seront peints de couleurs distinctes suivant leur hauteur (les éléments qui possèdent une même hauteur seront peints de la même couleur plus particulièrement les rebords du modèle) sauf les demi-sphères et "pyramides".
+\par Nous avons opté pour le polystyrène car c'est un matériau facilement maniable et que l'on peut trouver assez facilement.
+\subsection{Conception du modèle virtuel}
+La réalisation du modèle virtuel s'est faite à l'aide du logiciel 123D Design qui est assez facile d'utilisation. Chaque élément du modèle est conçu en fonction des vraies mesures faites sur le modèle réel.
+
+
+\section{Preuve de concept (Proof of concept - POC)}
+Dans cette section, nous montrons comment nous avons fait pour configurer la caméra \texttt{Asus Xtion Pro Live} afin que le programme puisse effectuer les tests avec cette dernière.
+Tout d'abord, nous avons édité le fichier \emph{infoCameras.txt} cité dans le chapitre précédent afin de pouvoir y ajouter les informations relatives à cette caméra.
+\par Par la suite, nous n'avons pas eu besoin de rajouter des lignes de code pour la reconnaissance de la caméra (initialisation et récupération de la carte de couleurs et de la carte de profondeurs) car ce modèle de caméra est supporté par la bibliothèque OpenNI2.
+\par Enfin, il nous suffira de sélectionner, à partir de l'interface de l'application, le modèle du capteur branché et cocher sur les cases \emph{Detect the model} pour une détection du modèle-étalon et \emph{Do the simple measures} pour démarrer les tests de mesures et rédiger le rapport comme expliqué précédemment. 
+
+
 \section{Résultats et critique}
+\subsection{Résultats obtenus}
+Ces résultats sont extraits du rapport rédigé par le programme après réalisation des tests avec la caméra Asus Xtion Pro Live avec une distance de 1.936m (distance entre la caméra et le modèle). Nous avons créé la base de données d'images templates suivant cette distance.  \\ \\
+
+\begin{table}[H]
+\begin{tabular}{c|llll}
+\cline{1-4}
+\multicolumn{1}{|l|}{\textbf{object}}   & \multicolumn{1}{l|}{\textbf{RMSE}} & \multicolumn{1}{l|}{\textbf{Bias}} & \multicolumn{1}{l|}{\textbf{MAPE}} &  \\
+\cline{1-4}
+\multicolumn{1}{|l|}{Whole model}  & \multicolumn{1}{l|}{0.645805}  & \multicolumn{1}{l|}{0.464625}  & \multicolumn{1}{l|}{0.445257}  &  \\ 
+\cline{1-4}
+\multicolumn{1}{|l|}{Blue piece}  & \multicolumn{1}{l|}{0.163108}  & \multicolumn{1}{l|}{0.0310855}  & \multicolumn{1}{l|}{0.0294527}  &  \\ 
+\cline{1-4}
+\multicolumn{1}{|l|}{Black piece}  & \multicolumn{1}{l|}{0.140734}  & \multicolumn{1}{l|}{0.0231826}  & \multicolumn{1}{l|}{0.0215494}  &  \\ 
+\cline{1-4}
+\multicolumn{1}{|l|}{Vertical magenta piece}  & \multicolumn{1}{l|}{0.301483}  & \multicolumn{1}{l|}{0.130255}  & \multicolumn{1}{l|}{-0.130255}  &  \\ 
+\cline{1-4}
+\multicolumn{1}{|l|}{Yellow piece 1}  & \multicolumn{1}{l|}{0.132736}  & \multicolumn{1}{l|}{0.019909}  & \multicolumn{1}{l|}{0.018747}  &  \\ 
+\cline{1-4}
+\multicolumn{1}{|l|}{Yellow piece 2}  & \multicolumn{1}{l|}{0.122078}  & \multicolumn{1}{l|}{0.0168138}  & \multicolumn{1}{l|}{0.0156804}  &  \\ 
+\cline{1-4}
+\multicolumn{1}{|l|}{Yellow half-sphere}  & \multicolumn{1}{l|}{0.12617}  & \multicolumn{1}{l|}{0.0215568}  & \multicolumn{1}{l|}{-0.0215568}  &  \\ 
+\cline{1-4}
+\multicolumn{1}{|l|}{Magenta pyramid}  & \multicolumn{1}{l|}{0.12583}  & \multicolumn{1}{l|}{0.0232983}  & \multicolumn{1}{l|}{-0.0232983}  &  \\ 
+\cline{1-4}
+\multicolumn{1}{|l|}{Blue pyramid}  & \multicolumn{1}{l|}{0.136497}  & \multicolumn{1}{l|}{0.0254308}  & \multicolumn{1}{l|}{-0.0254308}  &  \\ 
+\cline{1-4}
+\multicolumn{1}{|l|}{Blue  half-sphere}  & \multicolumn{1}{l|}{0.110225}  & \multicolumn{1}{l|}{0.0178525}  & \multicolumn{1}{l|}{-0.0178525}  &  \\ 
+\cline{1-4}
+\end{tabular}
+\end{table}
+
+\vspace{2cm}
+
+Ci-dessous le tableau résumant le taux d'erreur approximatif obtenu sur des distances différentes, et ce, en  prenant en considération que la valeur RMSE  calculée. \\
+
+
+
+\begin{table}[H]
+\centering
+\setlength\tabcolsep{2pt}
+\begin{tabular}{c|lllllllll}
+\cline{1-9}
+\multicolumn{1}{|l|}{}   & 
+\multicolumn{8}{l|}{\textbf{\hspace{4.5cm} Distances (m)}}    \\
+\cline{1-9}
+\multicolumn{1}{|l|}{\textbf{object}}   & 
+\multicolumn{1}{l|}{\textbf{1.936 }} & 
+\multicolumn{1}{l|}{\textbf{1.843}} & 
+\multicolumn{1}{l|}{\textbf{1.748}} &  
+\multicolumn{1}{l|}{\textbf{1.639 }} & 
+\multicolumn{1}{l|}{\textbf{1.550}} & 
+\multicolumn{1}{l|}{\textbf{1.445}} & 
+\multicolumn{1}{l|}{\textbf{1.359}} & 
+\multicolumn{1}{l|}{\textbf{1.259}} & \\
+\cline{1-9}
+\multicolumn{1}{|l|}{Whole model}  & 
+\multicolumn{1}{l|}{65\%}  &  
+\multicolumn{1}{l|}{69\%}  & 
+\multicolumn{1}{l|}{71\%}  & 
+\multicolumn{1}{l|}{76\%}  & 
+\multicolumn{1}{l|}{80\%}  & 
+\multicolumn{1}{l|}{84\%}  & 
+\multicolumn{1}{l|}{89\%}  & 
+\multicolumn{1}{l|}{94\%}  &  \\ 
+\cline{1-9}
+\multicolumn{1}{|l|}{Blue piece}  &
+\multicolumn{1}{l|}{16\%}  &
+\multicolumn{1}{l|}{17\%}  & 
+\multicolumn{1}{l|}{17\%} & 
+\multicolumn{1}{l|}{18\%}  & 
+\multicolumn{1}{l|}{18\%}  &  
+\multicolumn{1}{l|}{21\%}  & 
+\multicolumn{1}{l|}{21\%}  &
+\multicolumn{1}{l|}{22\%}   &  \\ 
+\cline{1-9}
+\multicolumn{1}{|l|}{Black piece}  & 
+\multicolumn{1}{l|}{14\%}  & 
+\multicolumn{1}{l|}{15\%}  & 
+\multicolumn{1}{l|}{15\%} & 
+\multicolumn{1}{l|}{14\%}  & 
+\multicolumn{1}{l|}{17\%}  &
+\multicolumn{1}{l|}{16\%}  & 
+\multicolumn{1}{l|}{18\%}  & 
+\multicolumn{1}{l|}{18\%}  &  \\ 
+\cline{1-9}
+\multicolumn{1}{|l|}{Vertical magenta piece}  & 
+\multicolumn{1}{l|}{30\%}  & 
+\multicolumn{1}{l|}{30\%}  & 
+\multicolumn{1}{l|}{30\%} & 
+\multicolumn{1}{l|}{31\%}  & 
+\multicolumn{1}{l|}{31\%}  & 
+\multicolumn{1}{l|}{31\%}  & 
+\multicolumn{1}{l|}{32\%}  &  
+\multicolumn{1}{l|}{38\%}  & \\ 
+\cline{1-9}
+\multicolumn{1}{|l|}{Yellow piece 1}  & 
+\multicolumn{1}{l|}{13\%}  & 
+\multicolumn{1}{l|}{13\%}  & 
+\multicolumn{1}{l|}{13\%}  & 
+\multicolumn{1}{l|}{13\%}  & 
+\multicolumn{1}{l|}{13\%}  & 
+\multicolumn{1}{l|}{13\%}  & 
+\multicolumn{1}{l|}{13\%}  & 
+\multicolumn{1}{l|}{13\%}  & \\ 
+\cline{1-9}
+\multicolumn{1}{|l|}{Yellow piece 2}  & 
+\multicolumn{1}{l|}{12\%}  & 
+\multicolumn{1}{l|}{12\%}  & 
+\multicolumn{1}{l|}{12\%}  &  
+\multicolumn{1}{l|}{13\%}  & 
+\multicolumn{1}{l|}{13\%}  & 
+\multicolumn{1}{l|}{14\%}  & 
+\multicolumn{1}{l|}{12\%}  & 
+\multicolumn{1}{l|}{15\%}  & \\ 
+\cline{1-9}
+\multicolumn{1}{|l|}{Yellow half-sphere}  & 
+\multicolumn{1}{l|}{13\%}  & 
+\multicolumn{1}{l|}{12\%}  & 
+\multicolumn{1}{l|}{12\%}  &  
+\multicolumn{1}{l|}{14\%}  & 
+\multicolumn{1}{l|}{15\%}  & 
+\multicolumn{1}{l|}{14\%}  & 
+\multicolumn{1}{l|}{13\%}  & 
+\multicolumn{1}{l|}{15\%}  & 
+\\ 
+\cline{1-9}
+\multicolumn{1}{|l|}{Magenta pyramid}  & 
+\multicolumn{1}{l|}{13\%}  & 
+\multicolumn{1}{l|}{14\%}  & 
+\multicolumn{1}{l|}{14\%}  &  
+\multicolumn{1}{l|}{14\%}  & 
+\multicolumn{1}{l|}{14\%}  & 
+\multicolumn{1}{l|}{15\%}  & 
+\multicolumn{1}{l|}{16\%}  & 
+\multicolumn{1}{l|}{16\%}  & \\ 
+\cline{1-9}
+\multicolumn{1}{|l|}{Blue pyramid}  & 
+\multicolumn{1}{l|}{14\%}  & 
+\multicolumn{1}{l|}{14\%}  & 
+\multicolumn{1}{l|}{13\%}  &  
+\multicolumn{1}{l|}{13\%}  & 
+\multicolumn{1}{l|}{14\%}  & 
+\multicolumn{1}{l|}{16\%}  & 
+\multicolumn{1}{l|}{16\%}  & 
+\multicolumn{1}{l|}{17\%}  & \\ 
+\cline{1-9}
+\multicolumn{1}{|l|}{Blue  half-sphere}  & 
+\multicolumn{1}{l|}{11\%}  & 
+\multicolumn{1}{l|}{11\%}  & 
+\multicolumn{1}{l|}{12\%}  &  
+\multicolumn{1}{l|}{12\%}  & 
+\multicolumn{1}{l|}{13\%}  & 
+\multicolumn{1}{l|}{14\%}  & 
+\multicolumn{1}{l|}{15\%}  & 
+\multicolumn{1}{l|}{14\%}  & \\ 
+\cline{1-9}
+\multicolumn{1}{|l|}{\textbf{Average rate}} & 
+\multicolumn{1}{l|}{\textbf{20.1\%}}  & 
+\multicolumn{1}{l|}{\textbf{20.7\%}}  &  
+\multicolumn{1}{l|}{\textbf{20.9\%}}  & 
+\multicolumn{1}{l|}{\textbf{21.8\%}}  & 
+\multicolumn{1}{l|}{\textbf{22.8\%}}  & 
+\multicolumn{1}{l|}{\textbf{23.8\%}}  & 
+\multicolumn{1}{l|}{\textbf{24.5\%}}  &  
+\multicolumn{1}{l|}{\textbf{26.2\%}}  &\\ 
+\cline{1-9}
+
+\end{tabular}
+\end{table}
+
+\vspace{2cm} 
+\par On peut observer aisément un taux d'erreur de plus en plus élevé pour le modèle en entier. Pour les autres éléments, le taux reste pratiquement constant. 
+
+\subsection{Critiques}
+Comme nous doutons de la méthode employée pour extraire les données OpenGL correspondantes aux données de la depth de la caméra (données extraites aux mêmes pixels), nous pensons qu'il est tout à fait normal que le taux soit si élevé. Toutefois, comme après chaque changement de distance (ie: la caméra se rapproche du modèle observé), le modèle 3D subit un changement d'échelle afin qu'il soit superposé au modèle réel. Ainsi, la valeur de la coordonnée $z$ de chaque pixel du modèle 3D subit pareillement ce changement (devient de plus en plus grande).
+
 
 
 \chapter{Conclusion et Perspectives\label{chap-conclusion}}

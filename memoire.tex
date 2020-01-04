@@ -13,7 +13,7 @@
 \usepackage{url}
 \usepackage[french]{algorithm}
 \usepackage{style/myalgorithm}
-\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{amsmath,amsfonts,amssymb, commath}
 \usepackage{biblatex}
 \addbibresource{memoire}
 \newcommand{\fBm}{\emph{fBm}~}
@@ -111,14 +111,9 @@ Il existe différents modèles de caméras RGB-D. Parmi elles, nous pouvons cite
 \par \texttt{La Kinect} a fait son apparition en septembre 2008. Elle a été conçue par Microsoft et était destinée pour la console de jeu XBox 360. Elle permettait aux utilisateurs d'interagir avec la console à l'aide d'une NUI \footnote{Natural User Interface (Interface Utilisateur Naturelle), se réfère à une interface utilisateur invisible.} en utilisant les mouvements gestuels et une reconnaissance vocale. Elle sera plus tard utilisée dans les domaines de la  recherche et du développement pour différents secteurs comme le domaine de la médecine, l'industrie automobile, la robotique, l'éducation,  .... 
 \par \texttt{Asus Xtion Pro Live} est le modèle de référence que nous utilisons afin d'effectuer les qualifications. Elle utilise la technologie PrimeSense  \footnote{Connu principalement pour sa licence de conception matérielle et de puce employée dans le mécanisme de détection de mouvements de la Kinect XBox360. Pour plus d'informations, le lecteur peut se référer à ce lien \url{https://www.crunchbase.com/organization/primesense#section-web-traffic-by-similarweb}.} pour la détection de mouvements.
 \par \texttt{BlasterX Senz3D} a fait son apparation en Septembre 2016. Conçue par Creative,  elle a été présentée comme une webcam intelligente basée sur ce qu'il y a de mieux en matière de savoir-faire et de technologie. Elle possède trois lentilles pour capturer les données visuelles: une caméra RVB, une caméra infra-rouge et un projecteur laser. Ces dernières collaborent avec la technologies Inetl RealSense pour réagir aux expressions faciales et aux gestes corporels des utilisateurs.
-\par \texttt{Orbbec Astra Pro} fait partie de la série Astra. Elles offres une vision par ordinateur qui permet des dizaines de fonctions telles que la reconnaissance des visages, la reconnaissance des gestes, le suivi du corps humain, la mesure tridimensionnelle, la perception de l'environnement et la reconstruction de cartes en trois dimensions.  De plus, elles offres une réactivité haut de gamme, une mesure de la profondeur, des dégradés fluides et des contours précis, ainsi que la possibilité de filtrer les pixels de profondeur de faible qualité.
-\par \texttt{Intel RealSense D415} a un champ de vision standard bien adapté aux applications de haute précision telles que la numérisation 3D. Elle comprend le processeur Intel RealSense Vision D4 offrant une résolution en profondeur élevée, des capacités de longue portée, une technologie d'obturation globale et un large champ de vision. Grâce à ces deux derniers, la caméra offre une perception précise de la profondeur lorsque l'objet est en mouvement ou que l'appareil est en marche. De plus, elle couvre un champ de vision plus large, minimisant ainsi les angles morts.
+\par \texttt{Orbbec Astra Pro} fait partie de la série Astra. Elle offre une vision par ordinateur qui permet des dizaines de fonctions telles que la reconnaissance des visages, la reconnaissance des gestes, le suivi du corps humain, la mesure tridimensionnelle, la perception de l'environnement et la reconstruction de cartes en trois dimensions. De plus, elle offre une réactivité haut de gamme, une mesure de la profondeur, des dégradés fluides et des contours précis ainsi que la possibilité de filtrer les pixels de profondeur de faible qualité.
+\par \texttt{Intel RealSense D415} a un champ de vision standard bien adapté aux applications de haute précision telle que la numérisation 3D. Elle comprend le processeur Intel RealSense Vision D4 offrant une résolution en profondeur élevée, des capacités de longue portée, une technologie d'obturation globale et un large champ de vision. Grâce à ces deux dernières, la caméra offre une perception précise de la profondeur lorsque l'objet est en mouvement ou que l'appareil est en marche. De plus, elle couvre un champ de vision plus large, minimisant ainsi les angles morts.
 
-\section{Taux d'erreur (RMSE)}
-
-\section{Théoriquement (RMSE)}
-
-<<<<<<< HEAD
 \section{Erreur de mesure}
 L'erreur de mesure, autrefois appelée l'erreur absolue, est un processus qui permet d'évaluer l'écart entre la valeur mesurée et la valeur de référence qui est soit exacte ou connue. L'objectif de la mesure d'erreurs est de jauger à quel degré les deux valeurs sont proches. 
 Dans cette section, nous citons les types ainsi que quelques sources d'erreurs, ensuite,  nous faisons un détour sur les moyens théoriques et physiques employés à cet effet.
@@ -126,9 +121,35 @@ Dans cette section, nous citons les types ainsi que quelques sources d'erreurs, 
 Il existe deux types d'erreurs: aléatoires et systématiques. \\ Les erreurs aléatoires sont des erreurs dont les valeurs sont incohérentes et imprévisibles même en répétant les observations et en conservant les mêmes paramètres. \\Les erreurs dites systématiques, à l'inverse des erreurs aléatoires, sont des erreurs reproductibles, elles demeurent constantes tant que les paramètres restent inchangés. \\ \\
 Ces erreurs peuvent résulter de différentes sources; elles peuvent être dues à des facteurs environnementaux, à la résolution de l'instrument utilisé, au calibrage de l'appareil employé ou même à des erreurs humaines. \\ \\
 \subsection{Mesure d'erreurs à l'aide de matériels}
-\subsection{Mesure d'erreurs à l'aide de moyens théoriques}
+\subsection{Mesure d'erreurs par une approche théorique}
+A ce jour, on recense de multiples méthodes exploités à cet effet. Nous nous contentons de citer ci-dessous celles qui nous paraissent êtres les plus pertinentes. \\
+
+\begin{description}
+	\item[RMSE/RMSD]: Root Mean Square Error ou encore Root Mean Square Deviation que l'on pourrait traduire par; la racine carré de la moyenne des erreurs au carré. Elle demeure parmi les plus fréquentes en la matière. C'est une mesure de l'exactitude, qui permet de comparer les erreurs de prévision de différents modèles pour un ensemble de données précis et non entre des ensembles de données. Sa formule s'exprime comme suit:
+	\begin{equation}
+		\sqrt{\frac{1}{N}.\sum_{i = 1}^{N}(x_i - \hat{x_i})^2}
+	\end{equation}	
+De par la formule, on peut déduire que le résultat sera toujours positif et qu'obtenir une valeur de 0 (qui n'est généralement non atteint en pratique), témoignerait d'une exactitude parfaite. Ainsi, obtenir des valeurs avoisinant le zéro est positif pour les mesures.
+	\item[MSE]: Mean Square Error que l'on pourrait traduire par; l'erreur quadratique moyenne. Sa formule est comme suit:
+	\begin{equation}
+		\frac{1}{N}.\sum_{i = 1}^{N}(x_i - \hat{x_i})^2
+	\end{equation}
+	
+	\item[MAE]: Mean Absolute Error qui pourrait être traduit par; erreur moyenne absolue. Son équation est comme ci-dessous:
+	\begin{equation}
+		\frac{1}{N}.\sum_{i = 1}^{N} \abs{x_i - \hat{x_i}}
+	\end{equation}	 
+	\item[MAPE]: Mean Absolute Percentage Error qui pourrait être traduit par; le pourcentage de l'erreur moyenne absolue. Elle fait partie également des moyens de mesures d'erreur les plus fréquents. A noter que la valeur observée ne doit être aucunement nulle. La formule est comme ci-après:
+	\begin{equation}		
+		\frac{1}{N}.\sum_{i = 1}^{N} \abs{\frac{x_i - \hat{x_i}}{x_i}}
+	\end{equation}
+\end{description}
 
 
+Avec: \\ \\
+$x_i$, la valeur observée à la ième observation. \\
+$\hat{x}_i$, la valeur exacte à la ième observation. \\
+$N$, représente le nombre d'observations
 
 %\section{Techniques existantes de capture de mouvements} 
 \section[Technologies utilisées pour la depth]{Technologies utilisées pour la depth d'une caméra RGB-D} 
@@ -210,10 +231,10 @@ Dans ce passage, nous allons décrire notre outil conçu pour qualifier les cam�
  \includegraphics[scale=0.5]{images/realModel.png} \hspace{2cm}
   \caption{Modèle-étalon.\label{fig-model}}
 \end{figure}
-=======
+
 \chapter[Modèle logiciel pour la qualification]{Modèle logiciel pour la qualification de caméra RGB-D}
 Dans ce passage, nous allons décrire notre outil conçu pour qualifier les caméras.
->>>>>>> e27057fb0e07f9d83f35728f1f643f94249c480e
+
 
 \section{Description de l'application}
 

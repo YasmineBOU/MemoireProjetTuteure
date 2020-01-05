@@ -63,6 +63,7 @@
     \large
     \textbf{Yasmine BOUDJEMAÏ}\\
 \textbf{Mélanie DE JESUS CORREIA}\vspace{1.5cm}\\
+    Date de soutenance : le 10/01/2020\\
   \end{center}\vspace{3.5cm}~\\
   \begin{tabular}{ll}
     \hspace{-0.45cm}Organisme~:~&~Université Paris 8 Vincennes-Saint-Denis\\
@@ -96,7 +97,19 @@
 \chapter*{Introduction}
 \markboth{\sc Introduction}{}
 \addcontentsline{toc}{chapter}{Introduction}
-Introduction a faire à la fin.
+La caméra RGB-D dans ses débuts, notamment la Kinect, a beaucoup
+servi le monde du jeux-vidéo. Cependant, depuis un certain nombre d'années, elle contribue activement et fondamentalement dans le développement
+de multiples applications dans diverses disciplines telles que la médecine, la
+robotique et plus généralement l'aide à la personne.
+\par Ce projet tuteuré a pour objet la conception d'outils pour la qualification de caméras RGB-D. Il vise à comparer différentes caméras afin de sélectionner la meilleure en
+fonction du besoin ciblé.
+\par L'application résultante de ce projet devra être en mesure de détecter la colonne vertébrale de la personne posant de dos à la caméra RGB-D, principalement ceux atteints par la scoliose. Ainsi, nous nous attendons à ce qu'elle puisse modéliser la colonne en partant d'un modèle 3D et produire par la suite un rapport des mesures effectuées avec chacune des caméras. 
+\par Cependant, comme dans tout projet, des contraintes s'imposent. Parmi ces dernières, nous pouvons citer:
+\begin{itemize}
+	\item La localisation de la colonne vertébrale. Pour cela, nous pensons utiliser le Machine Learning pour vérifier si le patient est atteint de scoliose. Si tel est le cas, arriver à détecter les positions des contours de la colonne vertébrale.
+	\item Parvenir à manipuler le modèle 3D afin qu'il corresponde à la colonne vertébrale du patient.
+\end{itemize}
+
 \chapter{État de l'art}
 
 Dans ce chapitre, nous allons définir ce qu'est une caméra RGB-D, nous énumérons certains des différents modèles existants, nous abordons brièvement les différentes techniques utilisées pour la récupération de la profondeur par une caméra. Enfin, nous discutons les différences recensées sur la \texttt{kinect V2} et \texttt{V3}.
@@ -121,6 +134,45 @@ Dans cette section, nous citons les types ainsi que quelques sources d'erreurs, 
 Il existe deux types d'erreurs: aléatoires et systématiques. \\ Les erreurs aléatoires sont des erreurs dont les valeurs sont incohérentes et imprévisibles même en répétant les observations et en conservant les mêmes paramètres. \\Les erreurs dites systématiques, à l'inverse des erreurs aléatoires, sont des erreurs reproductibles, elles demeurent constantes tant que les paramètres restent inchangés. \\ \\
 Ces erreurs peuvent résulter de différentes sources; elles peuvent être dues à des facteurs environnementaux, à la résolution de l'instrument utilisé, au calibrage de l'appareil employé ou même à des erreurs humaines. \\ \\
 \subsection{Mesure d'erreurs à l'aide de matériels}
+Diverses instruments de mesures de distance sont mis à porté des professionnels tels que les ingénieurs en génie civil, les architectes, les métreurs, les dessinateurs, les topographes, les menuisiers, les maçons, les agents immobiliers, les électriciens, les décorateurs, les experts. Nous nommons certains d'entre eux ci-après.
+\begin{description}
+	\item[Distancemètre laser Leica DISTO D8]: cet appareil est pourvu d'un localisateur numérique, d'un écran couleur haute résolution 2,4", d'un capteur d'inclinaison 360° et de lma technologie Bluetooth. Parmi ses caractéristiques techniques, on peut citer:
+	\begin{itemize}
+		\item Il possède une porté allant de 0.05m jusqu'à 200m.
+		\item Une précision de $\pm 1mm$.
+		\item Des opérations arithmétiques ainsi que des fonctions mathématiques sont intégrées à l'instrument telles que la fonction Pythagore, la fonction Trapèze ou encore la fonction triangle.
+		\item Image en temps réel 
+		\item Un Plug-In d'AutoCAD embarqué dans l'appareil qui permet de dessiner et de planifier avec le logiciel d'AutoCAD.
+		\item Il inclut un logiciel de transfert de données pour le distancemètre  \textbf{Leica Disto Transfert}.
+		\item Avec la technologie Bluetooth intégrée, l'utilisateur peut transférer les mesures effectuées vers un ordinateur portable ou un PC sans avoir recours aux câbles. Les données ainsi transférées peuvent être éditées à l'aide de logiciels tels que Word, Excel, AutoCAD ou encore d'autres.  
+	\end{itemize}
+\end{description}
+
+\begin{description}
+	\item[Odomètre vérifiable PCE-MW 2]: Instrument permettant de mesurer différentes zones (ie: chantiers, zones industrielles, zones sportives, ...), des câblages, des tuyauteries. Parmi ses caractéristiques, on peut mentionner:
+	\begin{itemize}
+		\item Pèse 2200g
+		\item Mesure pouvant aller jusqu'à 99999,9 mètres.
+		\item Permet d'effectuer une addition en se déplaçant vert l'avant et une soustraction en bougeant vers l'arrière.
+		\item Possède une précision de $\pm 1\%$
+		\item La roue est en plastique et permet de résister aux huiles.
+	\end{itemize}	
+\end{description}
+
+\begin{description}
+	\item[Distancemètre laser PCE-LRF 600]: Le design de cet instrument est bien conçu puisqu'il est léger et il permet de le maintenir avec une seule main. De plus, il est facile d'utilisation. De ses caractéristiques, on peut évoquer:
+	\begin{itemize}
+		\item Il pèse 165g.
+		\item Il a une porté allant de 15m à 600m.
+		\item Une précision de $\pm 1m/\pm 0.1\%$.
+		\item Il possède un laser de type classe 1.
+		\item Résistant aux éclaboussures d'eau
+		\item Il permet une mesure des distances dans diverses situations météorologiques.
+	\end{itemize}
+	
+\end{description}
+
+
 \subsection{Mesure d'erreurs par une approche théorique}
 A ce jour, on recense de multiples méthodes exploités à cet effet. Nous nous contentons de citer ci-dessous celles qui nous paraissent êtres les plus pertinentes. \\
 
@@ -233,15 +285,25 @@ Dans ce passage, nous allons décrire notre outil conçu pour qualifier les cam�
 \end{figure}
 
 \chapter[Modèle logiciel pour la qualification]{Modèle logiciel pour la qualification de caméra RGB-D}
-Dans ce passage, nous allons décrire notre outil conçu pour qualifier les caméras.
+Dans ce passage, nous allons décrire notre outil que nous voudrions concevoir pour qualifier les caméras. Par la suite, nous montrons ce que nous avons pu commencé à faire pour débuter ce projet.
 
 
 \section{Description de l'application}
 
+
+\section{Application développée}
+Notre application est composée d'une fenêtre qui comprend une partie affichage de la scène filmée en temps réel ainsi qu'une partie interface graphique qui nous permet de communiquer avec le programme. Nous parlerons un peu plus en détail de ces parties dans les sous-sections à venir.
 \subsection{Première partie: Affichage de la scène captée }
-
+Pour cet effet, nous sommes partis d'un programme fourni par \emph{M. Farès BELHADJ} auquel nous avons rajouté des choses pour la conception de l'outil. Il comprend l'utilisation de la bibliothèque OpenGL, GL4Dummies ainsi que la bibliothèque OpenNI2 pour établir la connexion avec la caméra RGB-D pour nous fournir par la suite la carte de couleurs et la carte de profondeurs.
 \subsection{Seconde partie: Interface graphique}
-
+Pour l'interface graphique, nous avons exploité la bibliothèque Dear ImGui disponible sur GitHub sur le lien suivant \url{https://github.com/ocornut/imgui}. C'est une bibliothèque assez facile d'utilisation une fois l'étape de l'intégration dans le contexte OpenGL effectué. Cette interface contient un certain nombre de composants. Parmi les composants principaux, nous pouvons citer une liste déroulante qui nous permet de sélectionner le modèle de caméra sur laquelle nous souhaitons réaliser les tests de mesures. Ainsi, une fois le choix de caméra effectué, le programme met automatiquement à jour tous les paramètres présents dans les champs suivants la liste en récupérant les données à partir d'un fichier que nous avons nommé \emph{infoCameras.txt}. Ainsi, ce dernier pourra être exploité pour tout rajout de nouvelles caméras et/ou modification sur les données uniquement.
+Autres les composants cités ci-dessus, nous noterons la présence de deux cases à cocher comme montré dans la figure \ref{fig-gui} La première permet une détection du modèle et l'autre de passer les tests de mesures.
+\begin{figure}[htbp]
+  %\centering
+  \hspace{3.5cm}
+ \includegraphics[scale=0.5]{images/GUI.png} \hspace{2cm}
+  \caption{Interface graphique du programme.\label{fig-gui}}
+\end{figure}
 
 \section{Conception du modèle réel et du modèle virtuel}
 

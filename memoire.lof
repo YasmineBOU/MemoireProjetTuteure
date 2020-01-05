@@ -3,17 +3,19 @@
 \defcounter {refsection}{0}\relax 
 \addvspace {10\p@ }
 \defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {1.1}{\ignorespaces Composants cam\IeC {\'e}ra RGB-D (Ici Asus Xtion Pro Live).}}{7}% 
+\contentsline {figure}{\numberline {1.1}{\ignorespaces Composants cam\IeC {\'e}ra RGB-D (Ici Asus Xtion Pro Live).}}{8}% 
 \defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {1.2}{\ignorespaces (De gauche \IeC {\`a} droite) image renvoy\IeC {\'e}e par la cam\IeC {\'e}ra RGB, image IR, depth map (une seule cam\IeC {\'e}ra), depth map (deux cam\IeC {\'e}ras). (figure tir\IeC {\'e}e de l'article de \emph {F.Alhwarin, A.Ferrein} et \emph {I.Scholl} ayant comme titre \emph {IR Stereo Kinect: Improving Depth Images by Combining StructuredLight with IR Stereo}).}}{8}% 
+\contentsline {figure}{\numberline {1.2}{\ignorespaces (De gauche \IeC {\`a} droite) image renvoy\IeC {\'e}e par la cam\IeC {\'e}ra RGB, image IR, depth map (une seule cam\IeC {\'e}ra), depth map (deux cam\IeC {\'e}ras). (figure tir\IeC {\'e}e de l'article de \emph {F.Alhwarin, A.Ferrein} et \emph {I.Scholl} ayant comme titre \emph {IR Stereo Kinect: Improving Depth Images by Combining StructuredLight with IR Stereo}).}}{9}% 
 \defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {1.3}{\ignorespaces Sch\IeC {\'e}ma illustrant la relation entre la distance focale et le champ de vision (fov).}}{10}% 
+\contentsline {figure}{\numberline {1.3}{\ignorespaces Sch\IeC {\'e}ma illustrant la relation entre la distance focale et le champ de vision (fov).}}{11}% 
 \defcounter {refsection}{0}\relax 
 \addvspace {10\p@ }
 \defcounter {refsection}{0}\relax 
 \contentsline {figure}{\numberline {2.1}{\ignorespaces Mod\IeC {\`e}le-\IeC {\'e}talon.}}{13}% 
 \defcounter {refsection}{0}\relax 
 \addvspace {10\p@ }
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Interface graphique du programme.}}{16}% 
 \defcounter {refsection}{0}\relax 
 \addvspace {10\p@ }
 \defcounter {refsection}{0}\relax 

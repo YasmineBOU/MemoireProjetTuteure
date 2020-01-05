@@ -80,10 +80,15 @@
 
 \chapter*{Remerciements}
 \markboth{\sc Remerciements}{}
+\par Nous souhaiterions adresser nos sincères remerciements à notre tuteur de projet \textbf{M.Farès BELHADJ} pour nous avoir accordées sa confiance et de nous avoir accompagnées tout au long de ce projet. \\
+\par Toute notre gratitude et toute notre reconnaissance vont à l'encontre de nos deux familles respectives pour leur soutien quotidien inestimable.
 
 \chapter*{Résumé}
 \markboth{\sc Résumé}{}
-
+Dès lors de sa sortie, de nombreux domaines ont connu un essor important à l 'aide des technologies RGB-D. À titre d'exemple, on peut citer NaturalPad \footnote{Entreprise, basée à Montpellier, spécialisée dans la création de jeux vidéo ludiques au service des besoins médicaux.} qui se sert de la Kinect pour la capture de mouvements pour des besoins de rééducation.	
+\par Dans des applications où la précision demeure nécessaire pour de meilleurs résultats, il est indispensable de savoir choisir le capteur qui convient le mieux aux exigences du contexte de l'application.
+Dans ce document, nous expliquons comment nous comptons réaliser notre application afin de qualifier un ensemble de caméras RGB-D et ce que nous avons pu développé entre-temps . Nous exposons les résultats produits par la première version de notre application, puis discutons de de la fiabilité des résultats obtenus.
+\par Dans le premier chapitre, nous proposons un état de l'art des technologies de la caméra RGB-D. Dans le second, nous une maquette de notre future application. En outre, nous détaillons les étapes par lesquelles nous sommes passés pour élaborer le prototype de l'outil répondant à la demande du projet tuteuré, ainsi que les résultats obtenus. Dans le troisième, nous montrons comment procéder pour utiliser un modèle bien précis de caméra afin de démarrer les tests avec ce dernier. Enfin, en conclusion, nous exposons succinctement le bilan du travail réalisé, de même que les perspectives envisagées pour parvenir à nos objectifs.
 
 %% Table des matières
 \tableofcontents
@@ -129,14 +134,25 @@ Il existe différents modèles de caméras RGB-D. Parmi elles, nous pouvons cite
 
 \section{Erreur de mesure}
 L'erreur de mesure, autrefois appelée l'erreur absolue, est un processus qui permet d'évaluer l'écart entre la valeur mesurée et la valeur de référence qui est soit exacte ou connue. L'objectif de la mesure d'erreurs est de jauger à quel degré les deux valeurs sont proches. 
-Dans cette section, nous citons les types ainsi que quelques sources d'erreurs, ensuite,  nous faisons un détour sur les moyens théoriques et physiques employés à cet effet.
+Dans cette section, nous citons les types ainsi que quelques sources d'erreurs, ensuite,  nous faisons un détour sur quelques instruments de mesure de distances ainsi que les moyens théoriques employés à cet effet.
 \subsection{Types et sources d'erreurs}
 Il existe deux types d'erreurs: aléatoires et systématiques. \\ Les erreurs aléatoires sont des erreurs dont les valeurs sont incohérentes et imprévisibles même en répétant les observations et en conservant les mêmes paramètres. \\Les erreurs dites systématiques, à l'inverse des erreurs aléatoires, sont des erreurs reproductibles, elles demeurent constantes tant que les paramètres restent inchangés. \\ \\
 Ces erreurs peuvent résulter de différentes sources; elles peuvent être dues à des facteurs environnementaux, à la résolution de l'instrument utilisé, au calibrage de l'appareil employé ou même à des erreurs humaines. \\ \\
-\subsection{Mesure d'erreurs à l'aide de matériels}
+\subsection{Instruments de mesure de distances}
 Diverses instruments de mesures de distance sont mis à porté des professionnels tels que les ingénieurs en génie civil, les architectes, les métreurs, les dessinateurs, les topographes, les menuisiers, les maçons, les agents immobiliers, les électriciens, les décorateurs, les experts. Nous nommons certains d'entre eux ci-après.
 \begin{description}
-	\item[Distancemètre laser Leica DISTO D8]: cet appareil est pourvu d'un localisateur numérique, d'un écran couleur haute résolution 2,4", d'un capteur d'inclinaison 360° et de lma technologie Bluetooth. Parmi ses caractéristiques techniques, on peut citer:
+	\item[Distancemètre laser Leica DISTO D8]: cet appareil est pourvu d'un localisateur numérique, d'un écran couleur haute résolution 2,4", d'un capteur d'inclinaison 360° et de lma technologie Bluetooth. 
+	
+	\begin{figure}[htbp]
+  %\centering
+ 	\begin{center}
+ 		\hspace{-0.75cm}
+		\includegraphics[scale=0.450]{images/distancemetreLaser1.jpg} \hspace{2cm}
+		\caption{Composants caméra RGB-D (Ici Asus Xtion Pro Live).\label{fig-Asus}}
+  	\end{center}
+\end{figure}
+
+ Parmi ses caractéristiques techniques, on peut citer:
 	\begin{itemize}
 		\item Il possède une porté allant de 0.05m jusqu'à 200m.
 		\item Une précision de $\pm 1mm$.
@@ -211,9 +227,11 @@ Le projecteur infrarouge de certaines caméras le possédant qu'on peut voir sur
 
 \begin{figure}[htbp]
   %\centering
-  \hspace{-0.75cm}
- \includegraphics[scale=0.50]{images/Asus.png} \hspace{2cm}
-  \caption{Composants caméra RGB-D (Ici Asus Xtion Pro Live).\label{fig-Asus}}
+ 	\begin{center}
+ 		\hspace{-0.75cm}
+		\includegraphics[scale=0.450]{images/Asus.png} \hspace{2cm}
+		\caption{Composants caméra RGB-D (Ici Asus Xtion Pro Live).\label{fig-Asus}}
+  	\end{center}
 \end{figure}
 
 Par la suite, les valeurs obtenues seront corrélées à un capteur RGB qu'on peut apercevoir sur la figure. Ces données pourront être représentées par un nuage de points \footnote{Est une représentation des points de coordonnées tridimensionnelles dont chacun peut avoir des attributs qui lui ont sont propres.}.
@@ -238,7 +256,7 @@ Cependant, des travaux de recherches ont été conduits afin d'y remédier. Parm
 Une caméra stéréoscopique est un appareil qui contient deux voire plus de capteurs d'images. Ceci nous rappelle la vision binoculaire humaine. En effet, ce mécanisme permet au système nerveux central de percevoir simultanément les images issus de chaque œil envoyées sous forme de signaux. Ainsi, il sera en mesure de se servir de ces différences (entre les deux images)  pour permettre une vision stéréoscopique pour la perception de relief et une mesure des distances en utilisant la triangulation \footnote{Approche géométrique permettant une mesure des distances. Le lecteur peut consulter cette page web pour de plus amples informations: \url{https://fr.wikipedia.org/wiki/Triangulation} .}. Le concept que nous venons d'expliquer est appelé disparité stéréoscopique \footnote{Différence dans la localisation d'un objet perçu par l'œil gauche et l'œil droit résultant de la séparation horizontale des yeux dont certaines caméras essaient de s'approprier la technique afin de récupérer la profondeur.}. 
 \par La stéréo-vision sert principalement à reconstituer la scène observée sous forme de modèle 3D. 
 \subsubsection{Carte de disparités}
-Le principe de la disparité est une approche du mécanisme humain vu précédemment. Il consiste en la différence entre les coordonnées pixels d'un point bidimensionnel d'une image et celles de son correspondant (présent sur une autre image prise au même moment). Ainsi, en appliquant le même traitement sur tous les pixels correspondants, on obtient la carte des disparités. Une carte est dite éparse lorsqu'une disparité est associée à quelques pixels et lorsque cette dernière est associée à chaque pixel, on dit d'elle qu'elle est dense.  \\ Une formule pour calculer la profondeur en fonction de la disparité s'obtient comme suit: \\ \\
+Le principe de la disparité est une approche du mécanisme humain vu précédemment. Il consiste en la différence entre les coordonnées pixels d'un point bidimensionnel d'une image et celles de son correspondant (présent sur une autre image prise au même moment). Ainsi, en appliquant le même traitement sur tous les pixels correspondants, on obtient la carte des disparités. Une carte est dite éparse lorsqu'une disparité est associée à quelques pixels et lorsque cette dernière est associée à chaque pixel, on dit d'elle qu'elle est dense.  \\ Une formule pour calculer la profondeur en fonction de la disparité s'obtient comme suit:
 \begin{equation}
  z = \dfrac{B.f}{d}  
 \end{equation} 
@@ -246,7 +264,7 @@ Le principe de la disparité est une approche du mécanisme humain vu précédem
 $z$ représentant la profondeur. \\
 $B$ \emph{Baseline} représente la distance séparant les deux capteurs. \\
 $f$ La distance focale en pixels calculée comme montré ci-après en nous servant de la figure \ref{fig-focal} . \\
-\begin{figure}[htbp]
+\begin{figure}[H]
   %\centering
   \hspace{-3cm}
  \includegraphics[scale=0.5]{images/focalLength.png} \hspace{2cm}
@@ -257,7 +275,7 @@ $f$ La distance focale en pixels calculée comme montré ci-après en nous serva
 \begin{equation}
  \tan \left( {\dfrac{fov}{2}}\right) = \dfrac{D}{2.f}    \Leftrightarrow   f = \dfrac{D}{2. \tan \left( {\dfrac{fov}{2}}\right)}
 \end{equation}
-\\ Avec:\\ \\
+Avec:\\ \\
 $D$  dimension qui peut représenter soit la largeur soit la hauteur en fonction du fov de la caméra employé. \\
 $fov$ (Field Of View) représente l'angle du champ de vision (soit horizontal ou vertical). \\
 $f$ représente la distance focale.
@@ -274,15 +292,6 @@ $ d = c.\dfrac{\Delta t}{2} $, avec $c$ la vitesse de la lumière dans l'air.\\ 
 \subsubsection{Kinect V2 Vs Kinect V3}
 \texttt{Kinect V3} est beaucoup plus légère et plus petite que la \texttt{V2}. Elle possède entre autre plus de microphones que la précédente. Elle a été conçue afin d'être principalement utilisée avec Azure , le service cloud de \texttt{Microsoft}. C'est sans doute ce qui la démarque le plus de sa prédécesseure. En effet, ce service lui permet d'effectuer une partie des calculs. En outre, elle bénéficie des Cognitive Services, autrement dit de l'intelligence artificielle pourra être incluse dans les applications créées.
 
-\chapter[Notre outil pour la qualification]{Notre outil pour la qualification de caméras RGB-D}
-Dans ce passage, nous allons décrire notre outil conçu pour qualifier les caméras par rapport à notre modèle-étalon montré dans l'image ci-dessous.
-
-\begin{figure}[htbp]
-  %\centering
-  \hspace{0.75cm}
- \includegraphics[scale=0.5]{images/realModel.png} \hspace{2cm}
-  \caption{Modèle-étalon.\label{fig-model}}
-\end{figure}
 
 \chapter[Modèle logiciel pour la qualification]{Modèle logiciel pour la qualification de caméra RGB-D}
 Dans ce passage, nous allons décrire notre outil que nous voudrions concevoir pour qualifier les caméras. Par la suite, nous montrons ce que nous avons pu commencé à faire pour débuter ce projet.
@@ -310,11 +319,25 @@ Autres les composants cités ci-dessus, nous noterons la présence de deux cases
 
 \section{Conception du modèle réel et du modèle virtuel}
 \subsection{Conception du modèle réel}
+\begin{center}
+	\begin{figure}[htbp]
+  		\hspace{0.75cm}
+ 		\includegraphics[scale=0.5]{images/realModel.png} \hspace{2cm}
+  		\caption{Modèle-étalon.\label{fig-model}}
+	\end{figure}
+\end{center}
+
 Pour fabriquer le modèle réel, nous avons décidé d'opter pour le polystyrène pour les composants du modèle et du carton pour sa base. Cette dernière sera par la suite recouverte de papier blanc. Les composants seront peints de couleurs distinctes suivant leur hauteur (les éléments qui possèdent une même hauteur seront peints de la même couleur plus particulièrement les rebords du modèle) sauf les demi-sphères et "pyramides".
 \par Nous avons opté pour le polystyrène car c'est un matériau facilement maniable et que l'on peut trouver assez facilement.
 \subsection{Conception du modèle virtuel}
 La réalisation du modèle virtuel s'est faite à l'aide du logiciel 123D Design qui est assez facile d'utilisation. Chaque élément du modèle est conçu en fonction des vraies mesures faites sur le modèle réel.
-
+\begin{center}
+	\begin{figure}[htbp]
+  		\hspace{0.37cm}
+ 		\includegraphics[scale=0.35]{images/3DModel.png} \hspace{2cm}
+  		\caption{Modèle 3D.\label{fig-model}}
+	\end{figure}
+\end{center}
 
 \section{Preuve de concept (Proof of concept - POC)}
 Dans cette section, nous montrons comment nous avons fait pour configurer la caméra \texttt{Asus Xtion Pro Live} afin que le programme puisse effectuer les tests avec cette dernière.
@@ -503,7 +526,9 @@ Comme nous doutons de la méthode employée pour extraire les données OpenGL co
 
 
 \chapter{Conclusion et Perspectives\label{chap-conclusion}}
-
+\par Dans ce rapport, nous avons présenté l'outil que nous avons commencé à développer pour la qualification de caméras RGB-D. Comme nous avons pu le constater, cet outil recense des erreurs au niveau des mesures. En effet, des données OpenGL qui ne sont pas forcément fiables, particulièrement lors de la mise à l'échelle, influent considérablement sur les résultats que nous avons vus lors du précédent chapitre.
+\par En perspectives, nous souhaiterions vérifier de manière plus pointilleuse les données OpenGL extraites et améliorer la mise à l'échelle du modèle 3D de manière à ne pas impacter le taux d'erreur.
+Dans ce cas, la qualification pourra être effectuée dans des conditions permettant une meilleure comparaison entre les différents modèles de caméras.  
 
 \nocite{*}
 %	\bibliographystyle{alpha}

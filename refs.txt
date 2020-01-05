@@ -27,3 +27,4 @@
 /*************************************/
 
 * https://www.webassign.net/question_assets/unccolphysmechl1/measurements/manual.html
+* https://www.pce-france.fr/fiches-mesureurs/distancemetre-laser-disto-d8.htm

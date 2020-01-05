@@ -87,8 +87,8 @@
 \markboth{\sc Résumé}{}
 Dès lors de sa sortie, de nombreux domaines ont connu un essor important à l 'aide des technologies RGB-D. À titre d'exemple, on peut citer NaturalPad \footnote{Entreprise, basée à Montpellier, spécialisée dans la création de jeux vidéo ludiques au service des besoins médicaux.} qui se sert de la Kinect pour la capture de mouvements pour des besoins de rééducation.	
 \par Dans des applications où la précision demeure nécessaire pour de meilleurs résultats, il est indispensable de savoir choisir le capteur qui convient le mieux aux exigences du contexte de l'application.
-Dans ce document, nous expliquons comment nous comptons réaliser notre application afin de qualifier un ensemble de caméras RGB-D et ce que nous avons pu développé entre-temps . Nous exposons les résultats produits par la première version de notre application, puis discutons de de la fiabilité des résultats obtenus.
-\par Dans le premier chapitre, nous proposons un état de l'art des technologies de la caméra RGB-D. Dans le second, nous une maquette de notre future application. En outre, nous détaillons les étapes par lesquelles nous sommes passés pour élaborer le prototype de l'outil répondant à la demande du projet tuteuré, ainsi que les résultats obtenus. Dans le troisième, nous montrons comment procéder pour utiliser un modèle bien précis de caméra afin de démarrer les tests avec ce dernier. Enfin, en conclusion, nous exposons succinctement le bilan du travail réalisé, de même que les perspectives envisagées pour parvenir à nos objectifs.
+Dans ce document, nous expliquons comment nous comptons réaliser notre application afin de qualifier un ensemble de caméras RGB-D et ce que nous avons pu développé entre-temps . Nous exposons les résultats produits par la première version de notre application, puis discutons de la fiabilité des résultats obtenus.
+\par Dans le premier chapitre, nous proposons un état de l'art des technologies de la caméra RGB-D. Dans le second, nous proposons une maquette de notre future application. En outre, nous détaillons les étapes par lesquelles nous sommes passées pour élaborer le prototype de l'outil répondant à la demande du projet tuteuré, ainsi que les résultats obtenus. Dans le troisième, nous montrons comment procéder pour utiliser un modèle bien précis de caméra afin de démarrer les tests avec ce dernier. Enfin, en conclusion, nous exposons succinctement le bilan du travail réalisé, de même que les perspectives envisagées pour parvenir à nos objectifs.
 
 %% Table des matières
 \tableofcontents
@@ -108,7 +108,7 @@ de multiples applications dans diverses disciplines telles que la médecine, la
 robotique et plus généralement l'aide à la personne.
 \par Ce projet tuteuré a pour objet la conception d'outils pour la qualification de caméras RGB-D. Il vise à comparer différentes caméras afin de sélectionner la meilleure en
 fonction du besoin ciblé.
-\par L'application résultante de ce projet devra être en mesure de détecter la colonne vertébrale de la personne posant de dos à la caméra RGB-D, principalement ceux atteints par la scoliose. Ainsi, nous nous attendons à ce qu'elle puisse modéliser la colonne en partant d'un modèle 3D et produire par la suite un rapport des mesures effectuées avec chacune des caméras. 
+\par L'application résultante de ce projet devra être en mesure de détecter la colonne vertébrale de la personne posant de dos à la caméra RGB-D, principalement ceux atteints de la scoliose. Ainsi, nous nous attendons à ce qu'elle puisse modéliser la colonne en partant d'un modèle 3D et produire par la suite un rapport des mesures effectuées avec chacune des caméras. 
 \par Cependant, comme dans tout projet, des contraintes s'imposent. Parmi ces dernières, nous pouvons citer:
 \begin{itemize}
 	\item La localisation de la colonne vertébrale. Pour cela, nous pensons utiliser le Machine Learning pour vérifier si le patient est atteint de scoliose. Si tel est le cas, arriver à détecter les positions des contours de la colonne vertébrale.
@@ -128,7 +128,7 @@ La caméra RGB-D, aussi appelée capteur RGB-D, est une caméra fournissant en m
 Il existe différents modèles de caméras RGB-D. Parmi elles, nous pouvons citer la Kinect et ses différentes versions, Asus Xtion Pro Live, BlasterX Senz3D, Orbbec, Intel RealSens D415, ...
 \par \texttt{La Kinect} a fait son apparition en septembre 2008. Elle a été conçue par Microsoft et était destinée pour la console de jeu XBox 360. Elle permettait aux utilisateurs d'interagir avec la console à l'aide d'une NUI \footnote{Natural User Interface (Interface Utilisateur Naturelle), se réfère à une interface utilisateur invisible.} en utilisant les mouvements gestuels et une reconnaissance vocale. Elle sera plus tard utilisée dans les domaines de la  recherche et du développement pour différents secteurs comme le domaine de la médecine, l'industrie automobile, la robotique, l'éducation,  .... 
 \par \texttt{Asus Xtion Pro Live} est le modèle de référence que nous utilisons afin d'effectuer les qualifications. Elle utilise la technologie PrimeSense  \footnote{Connu principalement pour sa licence de conception matérielle et de puce employée dans le mécanisme de détection de mouvements de la Kinect XBox360. Pour plus d'informations, le lecteur peut se référer à ce lien \url{https://www.crunchbase.com/organization/primesense#section-web-traffic-by-similarweb}.} pour la détection de mouvements.
-\par \texttt{BlasterX Senz3D} a fait son apparation en Septembre 2016. Conçue par Creative,  elle a été présentée comme une webcam intelligente basée sur ce qu'il y a de mieux en matière de savoir-faire et de technologie. Elle possède trois lentilles pour capturer les données visuelles: une caméra RVB, une caméra infra-rouge et un projecteur laser. Ces dernières collaborent avec la technologies Inetl RealSense pour réagir aux expressions faciales et aux gestes corporels des utilisateurs.
+\par \texttt{BlasterX Senz3D} a fait son apparation en Septembre 2016. Conçue par Creative,  elle a été présentée comme une webcam intelligente basée sur ce qu'il y a de mieux en matière de savoir-faire et de technologie. Elle possède trois lentilles pour capturer les données visuelles: une caméra RGB, une caméra infra-rouge et un projecteur laser. Ces dernières collaborent avec la technologie Intel RealSense pour réagir aux expressions faciales et aux gestes corporels des utilisateurs.
 \par \texttt{Orbbec Astra Pro} fait partie de la série Astra. Elle offre une vision par ordinateur qui permet des dizaines de fonctions telles que la reconnaissance des visages, la reconnaissance des gestes, le suivi du corps humain, la mesure tridimensionnelle, la perception de l'environnement et la reconstruction de cartes en trois dimensions. De plus, elle offre une réactivité haut de gamme, une mesure de la profondeur, des dégradés fluides et des contours précis ainsi que la possibilité de filtrer les pixels de profondeur de faible qualité.
 \par \texttt{Intel RealSense D415} a un champ de vision standard bien adapté aux applications de haute précision telle que la numérisation 3D. Elle comprend le processeur Intel RealSense Vision D4 offrant une résolution en profondeur élevée, des capacités de longue portée, une technologie d'obturation globale et un large champ de vision. Grâce à ces deux dernières, la caméra offre une perception précise de la profondeur lorsque l'objet est en mouvement ou que l'appareil est en marche. De plus, elle couvre un champ de vision plus large, minimisant ainsi les angles morts.
 
@@ -141,56 +141,74 @@ Ces erreurs peuvent résulter de différentes sources; elles peuvent être dues 
 \subsection{Instruments de mesure de distances}
 Diverses instruments de mesures de distance sont mis à porté des professionnels tels que les ingénieurs en génie civil, les architectes, les métreurs, les dessinateurs, les topographes, les menuisiers, les maçons, les agents immobiliers, les électriciens, les décorateurs, les experts. Nous nommons certains d'entre eux ci-après.
 \begin{description}
-	\item[Distancemètre laser Leica DISTO D8]: cet appareil est pourvu d'un localisateur numérique, d'un écran couleur haute résolution 2,4", d'un capteur d'inclinaison 360° et de lma technologie Bluetooth. 
+	\item[Distancemètre laser Leica DISTO D8]: cet appareil est pourvu d'un localisateur numérique, d'un écran couleur haute résolution 2,4", d'un capteur d'inclinaison 360° et de la technologie Bluetooth. 
 	
-	\begin{figure}[htbp]
+\begin{figure}[H]
   %\centering
  	\begin{center}
- 		\hspace{-0.75cm}
-		\includegraphics[scale=0.450]{images/distancemetreLaser1.jpg} \hspace{2cm}
-		\caption{Composants caméra RGB-D (Ici Asus Xtion Pro Live).\label{fig-Asus}}
+ 		\hspace{2cm}
+		\includegraphics[scale=0.55]{images/instrument1.jpg} \hspace{2cm}
+		\caption{Distancemètre laser Leica DISTO D8.\label{fig-instrument1}}
   	\end{center}
 \end{figure}
 
  Parmi ses caractéristiques techniques, on peut citer:
 	\begin{itemize}
-		\item Il possède une porté allant de 0.05m jusqu'à 200m.
+		\item Une porté allant de 0.05m jusqu'à 200m.
 		\item Une précision de $\pm 1mm$.
 		\item Des opérations arithmétiques ainsi que des fonctions mathématiques sont intégrées à l'instrument telles que la fonction Pythagore, la fonction Trapèze ou encore la fonction triangle.
 		\item Image en temps réel 
 		\item Un Plug-In d'AutoCAD embarqué dans l'appareil qui permet de dessiner et de planifier avec le logiciel d'AutoCAD.
 		\item Il inclut un logiciel de transfert de données pour le distancemètre  \textbf{Leica Disto Transfert}.
-		\item Avec la technologie Bluetooth intégrée, l'utilisateur peut transférer les mesures effectuées vers un ordinateur portable ou un PC sans avoir recours aux câbles. Les données ainsi transférées peuvent être éditées à l'aide de logiciels tels que Word, Excel, AutoCAD ou encore d'autres.  
+		\item Avec la technologie Bluetooth intégrée, l'utilisateur peut transférer les mesures effectuées vers un ordinateur portable ou un PC sans avoir recours aux câbles. Les données ainsi transférées peuvent être éditées à l'aide de logiciels tels que Word, Excel, AutoCAD, ....
 	\end{itemize}
 \end{description}
 
 \begin{description}
-	\item[Odomètre vérifiable PCE-MW 2]: Instrument permettant de mesurer différentes zones (ie: chantiers, zones industrielles, zones sportives, ...), des câblages, des tuyauteries. Parmi ses caractéristiques, on peut mentionner:
+	\item[Odomètre vérifiable PCE-MW 2]: Instrument permettant de mesurer différentes zones (ie: chantiers, zones industrielles, zones sportives, ...), des câblages, des tuyauteries, ....
+\begin{figure}[H]
+  %\centering
+ 	\begin{center}
+ 		\hspace{2cm}
+		\includegraphics[scale=0.5]{images/instrument2.jpg} \hspace{2cm}
+		\caption{Odomètre vérifiable PCE-MW 2.\label{fig-instrument2}}
+  	\end{center}
+\end{figure}
+Parmi ses caractéristiques, on peut mentionner:
 	\begin{itemize}
-		\item Pèse 2200g
+		\item Un poids de 2200g
 		\item Mesure pouvant aller jusqu'à 99999,9 mètres.
-		\item Permet d'effectuer une addition en se déplaçant vert l'avant et une soustraction en bougeant vers l'arrière.
-		\item Possède une précision de $\pm 1\%$
+		\item Permet d'effectuer une addition en se déplaçant vers l'avant et une soustraction en bougeant vers l'arrière.
+		\item Une précision de $\pm 1\%$
 		\item La roue est en plastique et permet de résister aux huiles.
 	\end{itemize}	
 \end{description}
 
 \begin{description}
-	\item[Distancemètre laser PCE-LRF 600]: Le design de cet instrument est bien conçu puisqu'il est léger et il permet de le maintenir avec une seule main. De plus, il est facile d'utilisation. De ses caractéristiques, on peut évoquer:
+	\item[Distancemètre laser PCE-LRF 600]: Le design de cet instrument est bien conçu puisqu'il est léger et il permet de le maintenir avec une seule main. De plus, il est facile d'utilisation. 
+\begin{figure}[H]
+  %\centering
+ 	\begin{center}
+ 		\hspace{2cm}
+		\includegraphics[scale=0.65]{images/instrument3.jpg} \hspace{2cm}
+		\caption{Distancemètre laser PCE-LRF 600.\label{fig-instrument3}}
+  	\end{center}
+\end{figure}
+De ses caractéristiques, on peut évoquer:
 	\begin{itemize}
-		\item Il pèse 165g.
-		\item Il a une porté allant de 15m à 600m.
+		\item Un poids de 165g.
+		\item Une porté allant de 15m à 600m.
 		\item Une précision de $\pm 1m/\pm 0.1\%$.
-		\item Il possède un laser de type classe 1.
-		\item Résistant aux éclaboussures d'eau
-		\item Il permet une mesure des distances dans diverses situations météorologiques.
+		\item Un laser de type classe 1.
+		\item Une résistance aux éclaboussures d'eau
+		\item Une mesure des distances dans diverses situations météorologiques.
 	\end{itemize}
 	
 \end{description}
 
 
 \subsection{Mesure d'erreurs par une approche théorique}
-A ce jour, on recense de multiples méthodes exploités à cet effet. Nous nous contentons de citer ci-dessous celles qui nous paraissent êtres les plus pertinentes. \\
+À ce jour, on recense de multiples méthodes exploitées à cet effet. Nous nous contentons de citer ci-dessous celles qui nous paraissent êtres les plus pertinentes. \\
 
 \begin{description}
 	\item[RMSE/RMSD]: Root Mean Square Error ou encore Root Mean Square Deviation que l'on pourrait traduire par; la racine carré de la moyenne des erreurs au carré. Elle demeure parmi les plus fréquentes en la matière. C'est une mesure de l'exactitude, qui permet de comparer les erreurs de prévision de différents modèles pour un ensemble de données précis et non entre des ensembles de données. Sa formule s'exprime comme suit:
@@ -207,7 +225,7 @@ De par la formule, on peut déduire que le résultat sera toujours positif et qu
 	\begin{equation}
 		\frac{1}{N}.\sum_{i = 1}^{N} \abs{x_i - \hat{x_i}}
 	\end{equation}	 
-	\item[MAPE]: Mean Absolute Percentage Error qui pourrait être traduit par; le pourcentage de l'erreur moyenne absolue. Elle fait partie également des moyens de mesures d'erreur les plus fréquents. A noter que la valeur observée ne doit être aucunement nulle. La formule est comme ci-après:
+	\item[MAPE]: Mean Absolute Percentage Error qui pourrait être traduit par; le pourcentage de l'erreur moyenne absolue. Elle fait partie également des moyens de mesure d'erreurs les plus fréquents. A noter que la valeur observée ne doit être aucunement nulle. La formule est comme ci-après:
 	\begin{equation}		
 		\frac{1}{N}.\sum_{i = 1}^{N} \abs{\frac{x_i - \hat{x_i}}{x_i}}
 	\end{equation}
@@ -217,7 +235,7 @@ De par la formule, on peut déduire que le résultat sera toujours positif et qu
 Avec: \\ \\
 $x_i$, la valeur observée à la ième observation. \\
 $\hat{x}_i$, la valeur exacte à la ième observation. \\
-$N$, représente le nombre d'observations
+$N$, le nombre d'observations.
 
 %\section{Techniques existantes de capture de mouvements} 
 \section[Technologies utilisées pour la depth]{Technologies utilisées pour la depth d'une caméra RGB-D} 
@@ -225,7 +243,7 @@ Des méthodes employées pour la récupération de la depth, on peut en citer de
 \subsection{Infrarouge}
 Le projecteur infrarouge de certaines caméras le possédant qu'on peut voir sur la figure \ref{fig-Asus} projette un spectre infrarouge sur la scène captée. Le motif produit sur cette dernière sera capté par la caméra infrarouge et sera par la suite comparé à la base de données de motifs de référence stockés au préalable dans la caméra. Ces derniers seront indispensables pour la mesure de la profondeur de chaque pixel. 
 
-\begin{figure}[htbp]
+\begin{figure}[H]
   %\centering
  	\begin{center}
  		\hspace{-0.75cm}
@@ -243,7 +261,7 @@ Par la suite, les valeurs obtenues seront corrélées à un capteur RGB qu'on pe
 		\item {Problèmes de calculs des informations de profondeur à l'encontre de surfaces brillantes, très mates, transparentes, réfléchissantes ou encore envers des objets absorbants.} 
 		\item {Interférence des motifs (patterns) infrarouges si présence de plusieurs caméras RGB-D de même type. En effet, chaque capteur visualisera ses propres motifs ainsi que ceux des autres caméras présentes et ne saura distinguer les siens des autres qui se chevauchent.  De cela découle une perte considérable d'informations de profondeur comme nous pouvons l'observer sur la figure \ref{fig-interference}. 
 
-\begin{figure}[htbp]
+\begin{figure}[H]
   %\centering
   \hspace{0.75cm}
  \includegraphics[scale=0.5]{images/interference.png}
@@ -294,11 +312,30 @@ $ d = c.\dfrac{\Delta t}{2} $, avec $c$ la vitesse de la lumière dans l'air.\\ 
 
 
 \chapter[Modèle logiciel pour la qualification]{Modèle logiciel pour la qualification de caméra RGB-D}
-Dans ce passage, nous allons décrire notre outil que nous voudrions concevoir pour qualifier les caméras. Par la suite, nous montrons ce que nous avons pu commencé à faire pour débuter ce projet.
+Dans ce passage, nous allons décrire notre outil que nous voudrions concevoir pour qualifier les caméras. Par la suite, nous montrons ce que nous avons commencé à faire pour débuter ce projet.
 
 
 \section{Description de l'application}
 
+\begin{center}
+	\begin{figure}[H]
+  		\hspace{0.1cm}
+ 		\includegraphics[scale=0.5]{images/maquetteApp1.png} \hspace{2cm}
+  		\caption{Maquette globale de l'application.\label{fig-maquette}}
+	\end{figure}
+\end{center}
+
+La figure \ref{fig-maquette} représente l'esquisse globale de l'application que nous souhaiterions mettre en œuvre. 
+
+\begin{center}
+	\begin{figure}[H]
+  		\hspace{-1.5cm}
+ 		\includegraphics[scale=0.5]{images/maquetteApp2.png} \hspace{2cm}
+  		\caption{Maquette de l'interface graphique de l'application.\label{fig-interface}}
+	\end{figure}
+\end{center}
+
+La figure \ref{fig-interface} expose le squelette de l'interface graphique avec ses éléments la composant.
 
 \section{Application développée}
 Notre application est composée d'une fenêtre qui comprend une partie affichage de la scène filmée en temps réel ainsi qu'une partie interface graphique qui nous permet de communiquer avec le programme. Nous parlerons un peu plus en détail de ces parties dans les sous-sections à venir.
@@ -335,7 +372,7 @@ La réalisation du modèle virtuel s'est faite à l'aide du logiciel 123D Design
 	\begin{figure}[htbp]
   		\hspace{0.37cm}
  		\includegraphics[scale=0.35]{images/3DModel.png} \hspace{2cm}
-  		\caption{Modèle 3D.\label{fig-model}}
+  		\caption{Modèle 3D.\label{fig-3Dmodel}}
 	\end{figure}
 \end{center}
 
@@ -381,7 +418,6 @@ Ces résultats sont extraits du rapport rédigé par le programme après réalis
 \vspace{2cm}
 
 Ci-dessous le tableau résumant le taux d'erreur approximatif obtenu sur des distances différentes, et ce, en  prenant en considération que la valeur RMSE  calculée. \\
-
 
 
 \begin{table}[H]
@@ -516,7 +552,6 @@ Ci-dessous le tableau résumant le taux d'erreur approximatif obtenu sur des dis
 
 \end{tabular}
 \end{table}
-
 \vspace{2cm} 
 \par On peut observer aisément un taux d'erreur de plus en plus élevé pour le modèle en entier. Pour les autres éléments, le taux reste pratiquement constant. 
 
@@ -526,9 +561,22 @@ Comme nous doutons de la méthode employée pour extraire les données OpenGL co
 
 
 \chapter{Conclusion et Perspectives\label{chap-conclusion}}
-\par Dans ce rapport, nous avons présenté l'outil que nous avons commencé à développer pour la qualification de caméras RGB-D. Comme nous avons pu le constater, cet outil recense des erreurs au niveau des mesures. En effet, des données OpenGL qui ne sont pas forcément fiables, particulièrement lors de la mise à l'échelle, influent considérablement sur les résultats que nous avons vus lors du précédent chapitre.
+\par Dans ce rapport, nous avons présenté l'outil que nous avons commencé à développer pour la qualification de caméras RGB-D. Comme nous avons pu le constater, ce dernier recense des erreurs au niveau des mesures. En effet, des données OpenGL qui ne sont pas forcément fiables, particulièrement lors de la mise à l'échelle du modèle 3D, influent considérablement sur les résultats que nous avons vus lors du précédent chapitre.
 \par En perspectives, nous souhaiterions vérifier de manière plus pointilleuse les données OpenGL extraites et améliorer la mise à l'échelle du modèle 3D de manière à ne pas impacter le taux d'erreur.
 Dans ce cas, la qualification pourra être effectuée dans des conditions permettant une meilleure comparaison entre les différents modèles de caméras.  
+\par Afin de parvenir à nos objectifs premiers, il nous faut effectuer les tests de mesures sur la colonne vertébrale d'un vrai patient. Dans ce fait, il nous faut rechercher un modèle 3D de colonne vertébrale ou un modèle s'en rapprochant le plus possible. De plus, l'application doit être améliorée dans son ensemble. En effet, comme nous pouvons le contaster, l'interface graphique de l'application actuelle ne reflète pas totalement la maquette présentée à la figure \ref{fig-interface}.
+\par Pour cela, nous comptons nous organiser comme présenté dans le planning ci-après.
+
+\begin{center}
+	\begin{figure}[H]
+  		\hspace{-1.5cm}
+ 		\includegraphics[scale=0.5]{images/Planning.png} \hspace{2cm}
+  		\caption{Planning prévu pour le projet tuteuré au second semestre.\label{fig-planning}}
+	\end{figure}
+\end{center}
+
+\par Dans le planning ci-dessus, les cases de couleur grise et bleue foncée représentent les jours pour lesquels nous ne travaillerons pas sur le projet puisque ces jours sont reservés soit  à l'alternance et au stage soit aux cours.  Dans ce calendrier, les jours nous important le plus sont ceux colorés en jaune puisqu'ils sont réservés au projet tuteuré. En outre, les jours de couleur lavande seront potentiellement consacrés au projet également. 
+
 
 \nocite{*}
 %	\bibliographystyle{alpha}

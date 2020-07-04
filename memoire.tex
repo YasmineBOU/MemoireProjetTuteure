@@ -88,7 +88,7 @@
 Dès lors de sa sortie, de nombreux domaines ont connu un essor important à l 'aide des technologies RGB-D. À titre d'exemple, on peut citer NaturalPad \footnote{Entreprise, basée à Montpellier, spécialisée dans la création de jeux vidéo ludiques au service des besoins médicaux.} qui se sert de la Kinect pour la capture de mouvements pour des besoins de rééducation.	
 \par Dans des applications où la précision demeure nécessaire pour de meilleurs résultats, il est indispensable de savoir choisir le capteur qui convient le mieux aux exigences du contexte de l'application.
 Dans ce document, nous expliquons comment nous comptons réaliser notre application afin de qualifier un ensemble de caméras RGB-D et ce que nous avons pu développé entre-temps . Nous exposons les résultats produits par la première version de notre application, puis discutons de la fiabilité des résultats obtenus.
-\par Dans le premier chapitre, nous proposons un état de l'art des technologies de la caméra RGB-D. Dans le second, nous proposons une maquette de notre future application. En outre, nous détaillons les étapes par lesquelles nous sommes passées pour élaborer le prototype de l'outil répondant à la demande du projet tuteuré, ainsi que les résultats obtenus. Dans le troisième, nous montrons comment procéder pour utiliser un modèle bien précis de caméra afin de démarrer les tests avec ce dernier. Enfin, en conclusion, nous exposons succinctement le bilan du travail réalisé, de même que les perspectives envisagées pour parvenir à nos objectifs.
+\par Dans le premier chapitre, nous proposons un état de l'art des technologies de la caméra RGB-D. Dans le second, nous proposons une maquette de notre application. En outre, nous détaillons les étapes par lesquelles nous sommes passées pour élaborer le prototype de l'outil répondant à la demande du projet tuteuré, ainsi que les résultats obtenus. Dans le troisième, nous montrons comment procéder pour utiliser deux modèles distincts de caméras afin de démarrer les tests avec ces derniers. Enfin, en conclusion, nous exposons succinctement le bilan du travail réalisé, de même que les perspectives envisagées pour parvenir à nos objectifs.
 
 %% Table des matières
 \tableofcontents
@@ -99,6 +99,7 @@ Dans ce document, nous expliquons comment nous comptons réaliser notre applicat
 %% contenu ajouter ce type de pages sera perçu négativement)
 %\listofprogram
 \mainmatter
+
 \chapter*{Introduction}
 \markboth{\sc Introduction}{}
 \addcontentsline{toc}{chapter}{Introduction}
@@ -108,12 +109,9 @@ de multiples applications dans diverses disciplines telles que la médecine, la
 robotique et plus généralement l'aide à la personne.
 \par Ce projet tuteuré a pour objet la conception d'outils pour la qualification de caméras RGB-D. Il vise à comparer différentes caméras afin de sélectionner la meilleure en
 fonction du besoin ciblé.
-\par L'application résultante de ce projet devra être en mesure de détecter la colonne vertébrale de la personne posant de dos à la caméra RGB-D, principalement ceux atteints de la scoliose. Ainsi, nous nous attendons à ce qu'elle puisse modéliser la colonne en partant d'un modèle 3D et produire par la suite un rapport des mesures effectuées avec chacune des caméras. 
-\par Cependant, comme dans tout projet, des contraintes s'imposent. Parmi ces dernières, nous pouvons citer:
-\begin{itemize}
-	\item La localisation de la colonne vertébrale. Pour cela, nous pensons utiliser le Machine Learning pour vérifier si le patient est atteint de scoliose. Si tel est le cas, arriver à détecter les positions des contours de la colonne vertébrale.
-	\item Parvenir à manipuler le modèle 3D afin qu'il corresponde à la colonne vertébrale du patient.
-\end{itemize}
+\par Tout d'abord, avant de passer à l'étape des qualifications,  il nous faut concevoir un modèle-étalon sur lequel nous passerons nos tests de mesure. Ce dernier est fait principalement de polystyrène. Ensuite,   nous fabriquons sa version virtuelle en 3D en ayant recours au logiciel \emph{123D Design}.
+\par Par la suite, nous exploitons certaines fonctionnalités fournies par OpenCV telles que matchTemplate afin de détecter le modèle-étalon.
+\par Enfin, nous opposons les données OpenGL et les données des caméras que nous avons pu réunir à partir de l'aire du modèle détecté en se servant de méthodes différentes pour le calcul du taux d'erreurs tel que le RMSE (Root Mean Square Error) \footnote{Méthode permettant de calculer l'écart-type des erreurs enregistrées. Se reférer à cette page web pour davantage de renseignements: \url{https://www.statisticshowto.datasciencecentral.com/rmse/}}. L'application produit automatiquement un rapport mettant en avant ces divergences.
 
 \chapter{État de l'art}
 
@@ -312,7 +310,7 @@ $ d = c.\dfrac{\Delta t}{2} $, avec $c$ la vitesse de la lumière dans l'air.\\ 
 
 
 \chapter[Modèle logiciel pour la qualification]{Modèle logiciel pour la qualification de caméra RGB-D}
-Dans ce passage, nous allons décrire notre outil que nous voudrions concevoir pour qualifier les caméras. Par la suite, nous montrons ce que nous avons commencé à faire pour débuter ce projet.
+Dans ce passage, nous allons décrire notre outil que nous avons pu concevoir pour qualifier les caméras.
 
 
 \section{Description de l'application}
@@ -325,7 +323,7 @@ Dans ce passage, nous allons décrire notre outil que nous voudrions concevoir p
 	\end{figure}
 \end{center}
 
-La figure \ref{fig-maquette} représente l'esquisse globale de l'application que nous souhaiterions mettre en œuvre. 
+La figure \ref{fig-maquette} représente l'esquisse globale de l'application mise en œuvre. 
 
 \begin{center}
 	\begin{figure}[H]
@@ -338,19 +336,20 @@ La figure \ref{fig-maquette} représente l'esquisse globale de l'application que
 La figure \ref{fig-interface} expose le squelette de l'interface graphique avec ses éléments la composant.
 
 \section{Application développée}
-Notre application est composée d'une fenêtre qui comprend une partie affichage de la scène filmée en temps réel ainsi qu'une partie interface graphique qui nous permet de communiquer avec le programme. Nous parlerons un peu plus en détail de ces parties dans les sous-sections à venir.
+Notre application est composée d'une fenêtre qui comprend une partie affichage de la scène filmée en temps réel ainsi qu'une partie interface graphique qui nous permet d'interagir avec le programme. Nous parlerons un peu plus en détail de ces parties dans les sous-sections à venir.
 \subsection{Première partie: Affichage de la scène captée }
-Pour cet effet, nous sommes partis d'un programme fourni par \emph{M. Farès BELHADJ} auquel nous avons rajouté des choses pour la conception de l'outil. Il comprend l'utilisation de la bibliothèque OpenGL, GL4Dummies ainsi que la bibliothèque OpenNI2 pour établir la connexion avec la caméra RGB-D pour nous fournir par la suite la carte de couleurs et la carte de profondeurs.
+Pour cet effet, nous sommes partis d'un programme fourni par \emph{M. Farès BELHADJ} que nous avons complété par d'autres lignes de code pour la conception de l'outil. Il comprend l'utilisation de la bibliothèque OpenGL, GL4Dummies ainsi que la bibliothèque OpenNI2 pour établir la connexion avec la caméra RGB-D pour nous fournir par la suite la carte de couleurs et la carte de profondeurs. 
 \subsection{Seconde partie: Interface graphique}
 Pour l'interface graphique, nous avons exploité la bibliothèque Dear ImGui disponible sur GitHub sur le lien suivant \url{https://github.com/ocornut/imgui}. C'est une bibliothèque assez facile d'utilisation une fois l'étape de l'intégration dans le contexte OpenGL effectué. Cette interface contient un certain nombre de composants. Parmi les composants principaux, nous pouvons citer une liste déroulante qui nous permet de sélectionner le modèle de caméra sur laquelle nous souhaitons réaliser les tests de mesures. Ainsi, une fois le choix de caméra effectué, le programme met automatiquement à jour tous les paramètres présents dans les champs suivants la liste en récupérant les données à partir d'un fichier que nous avons nommé \emph{infoCameras.txt}. Ainsi, ce dernier pourra être exploité pour tout rajout de nouvelles caméras et/ou modification sur les données uniquement.
-Autres les composants cités ci-dessus, nous noterons la présence de deux cases à cocher comme montré dans la figure \ref{fig-gui} La première permet une détection du modèle et l'autre de passer les tests de mesures.
-\begin{figure}[htbp]
-  %\centering
-  \hspace{3.5cm}
- \includegraphics[scale=0.5]{images/GUI.png} \hspace{2cm}
-  \caption{Interface graphique du programme.\label{fig-gui}}
-\end{figure}
-
+Autres les composants cités ci-dessus, nous noterons la présence de deux cases à cocher comme montré dans la figure \ref{fig-gui}. La première permet une détection du modèle et l'autre de passer les tests de mesures. 
+\begin{center}
+	\begin{figure}[htbp]
+	 % \centering
+	  \hspace{3cm}
+	 \includegraphics[scale=0.385]{images/GUI.png}
+	  \caption{Interface graphique du programme.\label{fig-gui}}
+	\end{figure}
+\end{center}
 
 \chapter{Cas pratiques de qualification}
 
@@ -365,7 +364,7 @@ Autres les composants cités ci-dessus, nous noterons la présence de deux cases
 \end{center}
 
 Pour fabriquer le modèle réel, nous avons décidé d'opter pour le polystyrène pour les composants du modèle et du carton pour sa base. Cette dernière sera par la suite recouverte de papier blanc. Les composants seront peints de couleurs distinctes suivant leur hauteur (les éléments qui possèdent une même hauteur seront peints de la même couleur plus particulièrement les rebords du modèle) sauf les demi-sphères et "pyramides".
-\par Nous avons opté pour le polystyrène car c'est un matériau facilement maniable et que l'on peut trouver assez facilement.
+\par Nous avons opté pour le polystyrène car c'est un matériau facilement maniable et que l'on peut trouver assez facilement. 
 \subsection{Conception du modèle virtuel}
 La réalisation du modèle virtuel s'est faite à l'aide du logiciel 123D Design qui est assez facile d'utilisation. Chaque élément du modèle est conçu en fonction des vraies mesures faites sur le modèle réel.
 \begin{center}
@@ -377,15 +376,15 @@ La réalisation du modèle virtuel s'est faite à l'aide du logiciel 123D Design
 \end{center}
 
 \section{Preuve de concept (Proof of concept - POC)}
-Dans cette section, nous montrons comment nous avons fait pour configurer la caméra \texttt{Asus Xtion Pro Live} afin que le programme puisse effectuer les tests avec cette dernière.
-Tout d'abord, nous avons édité le fichier \emph{infoCameras.txt} cité dans le chapitre précédent afin de pouvoir y ajouter les informations relatives à cette caméra.
-\par Par la suite, nous n'avons pas eu besoin de rajouter des lignes de code pour la reconnaissance de la caméra (initialisation et récupération de la carte de couleurs et de la carte de profondeurs) car ce modèle de caméra est supporté par la bibliothèque OpenNI2.
-\par Enfin, il nous suffira de sélectionner, à partir de l'interface de l'application, le modèle du capteur branché et cocher sur les cases \emph{Detect the model} pour une détection du modèle-étalon et \emph{Do the simple measures} pour démarrer les tests de mesures et rédiger le rapport comme expliqué précédemment. 
+Dans cette section, nous exposons la procédure suivie pour configurer les caméras \texttt{Asus Xtion Pro Live} et \texttt{Orbbec Astra Pro} afin que le programme puisse procéder aux tests de mesures.
+Tout d'abord, nous avons édité le fichier \emph{infoCameras.txt} cité dans le chapitre précédent en vue d'y rajouter les informations relatives à ces caméras.
+\par Par la suite, nous n'avons pas eu besoin de rajouter des lignes de code pour la reconnaissance de la caméra \texttt{Asus Xtion Pro Live} (initialisation et récupération de la carte de couleurs et de la carte de profondeurs) car ce modèle est reconnu par la bibliothèque OpenNI2. Bien que la caméra \texttt{Orbbec Astra Pro} soit aussi supportée par cette bibliothèque, il a quand même été indispensable de rajouter des lignes de code afin de récupérer la carte de couleurs. En effet, OpenNI2 ne permet pas de la capturer, par conséquent, nous avons dû exploiter certains aspects de la bibliothèque OpenCV pour se faire.
+\par Enfin, il nous suffira de sélectionner, à partir de l'interface de l'application, le modèle de la caméra branché et cocher sur les cases \emph{Detect the model} pour une détection du modèle-étalon et \emph{Take simple measures} pour démarrer les tests de mesures et la rédaction automatique du rapport comme expliqué précédemment. 
 
 
 \section{Résultats et critique}
 \subsection{Résultats obtenus}
-Ces résultats sont extraits du rapport rédigé par le programme après réalisation des tests avec la caméra Asus Xtion Pro Live avec une distance de 1.936m (distance entre la caméra et le modèle). Nous avons créé la base de données d'images templates suivant cette distance.  \\ \\
+Ces résultats sont extraits du rapport rédigé par le programme après réalisation des tests avec les caméra Asus Xtion Pro Live et Orbbec Astra Pro avec une distance de 1.936m (distance entre la caméra et le modèle). Nous avons créé la base de données d'images templates suivant cette distance.  \\ \\
 
 \begin{table}[H]
 \begin{tabular}{c|llll}
@@ -417,7 +416,7 @@ Ces résultats sont extraits du rapport rédigé par le programme après réalis
 
 \vspace{2cm}
 
-Ci-dessous le tableau résumant le taux d'erreur approximatif obtenu sur des distances différentes, et ce, en  prenant en considération que la valeur RMSE  calculée. \\
+Ci-dessous le tableau résumant le taux d'erreur approximatif obtenu sur des distances différentes, et ce, en  prenant en considération la valeur RMSE  calculée. \\
 
 
 \begin{table}[H]
@@ -561,22 +560,12 @@ Comme nous doutons de la méthode employée pour extraire les données OpenGL co
 
 
 \chapter{Conclusion et Perspectives\label{chap-conclusion}}
-\par Dans ce rapport, nous avons présenté l'outil que nous avons commencé à développer pour la qualification de caméras RGB-D. Comme nous avons pu le constater, ce dernier recense des erreurs au niveau des mesures. En effet, des données OpenGL qui ne sont pas forcément fiables, particulièrement lors de la mise à l'échelle du modèle 3D, influent considérablement sur les résultats que nous avons vus lors du précédent chapitre.
+\par Dans ce rapport, nous avons présenté l'outil que nous avons développé pour la qualification de caméras RGB-D. Comme nous avons pu le constater, ce dernier recense des erreurs au niveau des mesures. En effet, des données OpenGL qui ne sont pas forcément fiables, particulièrement lors de la mise à l'échelle du modèle 3D, influent considérablement sur les résultats que nous avons vus lors du précédent chapitre.
 \par En perspectives, nous souhaiterions vérifier de manière plus pointilleuse les données OpenGL extraites et améliorer la mise à l'échelle du modèle 3D de manière à ne pas impacter le taux d'erreur.
 Dans ce cas, la qualification pourra être effectuée dans des conditions permettant une meilleure comparaison entre les différents modèles de caméras.  
-\par Afin de parvenir à nos objectifs premiers, il nous faut effectuer les tests de mesures sur la colonne vertébrale d'un vrai patient. Dans ce fait, il nous faut rechercher un modèle 3D de colonne vertébrale ou un modèle s'en rapprochant le plus possible. De plus, l'application doit être améliorée dans son ensemble. En effet, comme nous pouvons le contaster, l'interface graphique de l'application actuelle ne reflète pas totalement la maquette présentée à la figure \ref{fig-interface}.
-\par Pour cela, nous comptons nous organiser comme présenté dans le planning ci-après.
+\par Afin de parvenir à nos objectifs premiers, il nous faut effectuer les tests de mesures sur la colonne vertébrale d'un vrai patient. Pour ce faire, il nous faut rechercher un modèle 3D de colonne vertébrale ou un modèle s'en rapprochant le plus possible. 
 
-\begin{center}
-	\begin{figure}[H]
-  		\hspace{-1.5cm}
- 		\includegraphics[scale=0.5]{images/Planning.png} \hspace{2cm}
-  		\caption{Planning prévu pour le projet tuteuré au second semestre.\label{fig-planning}}
-	\end{figure}
-\end{center}
-
-\par Dans le planning ci-dessus, les cases de couleur grise et bleue foncée représentent les jours pour lesquels nous ne travaillerons pas sur le projet puisque ces jours sont reservés soit  à l'alternance et au stage soit aux cours.  Dans ce calendrier, les jours nous important le plus sont ceux colorés en jaune puisqu'ils sont réservés au projet tuteuré. En outre, les jours de couleur lavande seront potentiellement consacrés au projet également. 
-
+\par L'application résultante devra être en mesure de détecter la colonne vertébrale de la personne posant de dos à la caméra RGB-D, principalement ceux atteints de la scoliose. Dans un premier lieu, la localisation de l'épine dorsale va être effectuée en se basant sur du Machine Learning. Par la suite, nous nous attendons à ce qu'elle puisse modéliser la colonne en partant d'un modèle 3D. 
 
 \nocite{*}
 %	\bibliographystyle{alpha}

@@ -14,8 +14,10 @@
 \usepackage[french]{algorithm}
 \usepackage{style/myalgorithm}
 \usepackage{amsmath,amsfonts,amssymb, commath}
-\usepackage{biblatex}
-\addbibresource{memoire}
+
+%\usepackage{biblatex}
+%\addbibresource{memoire}
+
 \newcommand{\fBm}{\emph{fBm}~}
 \newcommand{\etal}{\emph{et al.}~}
 \newcommand{\glAd}{\emph{GL4D}~}
@@ -76,7 +78,7 @@
 
 \chapter*{Dédicaces}
 \markboth{\sc Dédicaces}{}
-
+\par À toutes les personnes qui nous sont chères.
 
 \chapter*{Remerciements}
 \markboth{\sc Remerciements}{}
@@ -341,9 +343,10 @@ Notre application est composée d'une fenêtre qui comprend une partie affichage
 Pour cet effet, nous sommes partis d'un programme fourni par \emph{M. Farès BELHADJ} que nous avons complété par d'autres lignes de code pour la conception de l'outil. Il comprend l'utilisation de la bibliothèque OpenGL, GL4Dummies ainsi que la bibliothèque OpenNI2 pour établir la connexion avec la caméra RGB-D pour nous fournir par la suite la carte de couleurs et la carte de profondeurs. 
 \subsection{Seconde partie: Interface graphique}
 Pour l'interface graphique, nous avons exploité la bibliothèque Dear ImGui disponible sur GitHub sur le lien suivant \url{https://github.com/ocornut/imgui}. C'est une bibliothèque assez facile d'utilisation une fois l'étape de l'intégration dans le contexte OpenGL effectué. Cette interface contient un certain nombre de composants. Parmi les composants principaux, nous pouvons citer une liste déroulante qui nous permet de sélectionner le modèle de caméra sur laquelle nous souhaitons réaliser les tests de mesures. Ainsi, une fois le choix de caméra effectué, le programme met automatiquement à jour tous les paramètres présents dans les champs suivants la liste en récupérant les données à partir d'un fichier que nous avons nommé \emph{infoCameras.txt}. Ainsi, ce dernier pourra être exploité pour tout rajout de nouvelles caméras et/ou modification sur les données uniquement.
-Autres les composants cités ci-dessus, nous noterons la présence de deux cases à cocher comme montré dans la figure \ref{fig-gui}. La première permet une détection du modèle et l'autre de passer les tests de mesures. 
+Autres les composants cités ci-dessus, nous noterons la présence de deux cases à cocher comme montré dans la figure \ref{fig-gui}. La première permet une détection du modèle et l'autre de passer les tests de mesures. Ces étapes seront détaillées dans les sous-sections à venir. 
+
 \begin{center}
-	\begin{figure}[htbp]
+	\begin{figure}[H]
 	 % \centering
 	  \hspace{3cm}
 	 \includegraphics[scale=0.385]{images/GUI.png}
@@ -351,6 +354,25 @@ Autres les composants cités ci-dessus, nous noterons la présence de deux cases
 	\end{figure}
 \end{center}
 
+
+\subsubsection{Détection du modèle réel}  
+
+Pour cette partie, une fonction \emph{detectObject} est prévu à cet effet afin de renvoyer la localisation du modèle réel ainsi que celles des éléments le composant (demi-sphères, "pyramides", ...), ce qui fait un total de 10 objets à identifier. Une base de données d'images est crée pour servir de templates (images modèles) afin de pouvoir les distinguer. \par Pour chacun d'entre eux, un appel à la fonction \emph{callMatchTemplate} est effectué, qui, comme son nom l'indique, appelle la fonction \emph{matchTemplate} \footnote{Fonction OpenCV permettant de trouver à partir d'une image source les zones de correspondances avec l'image \emph{template}(image modèle). La documentation sur cette fonction est disponible sur le lien suivant: \url{https://docs.opencv.org/2.4/doc/tutorials/imgproc/histograms/template_matching/template_matching.html}}. Dans cette dernière, nous transformons notre image source (image récupérée de la scène captée par la caméra RGB-D) ainsi que notre image template en niveaux de gris et ensuite nous les passons sous le filtre Canny afin de rehausser les contours pour une meilleure détection \footnote{Nous nous sommes fortement inspirés du travail réalisé par Adrian ROSEBROCK, Ph.D en vision par ordinateur, disponible sur le lien suivant: \url {https://www.pyimagesearch.com/2015/01/26/multi-scale-template-matching-using-python-opencv/}.}. Ce processus qui comprend l'utilisation des filtres est appliqué uniquement pour la détection du model en entier et non sur ses composants. En effet, la couleur importe pour ces derniers puisque la forme n'est pas unique (présence de deux demi-sphères, ...).
+\par Cette étape est assez conséquente en terme de temps. En effet, suivant la distance à laquelle est éloignée la caméra du modèle réel, le programme doit redimensionner la scène filmée avec une certaine échelle et avec un nombre précis de fois avant d'appeler la fonction \emph{matchTemplate}, qui, combinée avec \emph{minMaxLoc}\footnote{Fonction OpenCV qui renvoie les valeurs minimales et maximales d'une \emph{Mat}. Cette dernière est une sorte de vecteur ou plus communément une matrice.}, nous permet de renvoyer la localisation du modèle(coordonnées en $x$ et $y$ ainsi que la largeur et la hauteur de l'aire détectée). 
+ De ce fait, une fois les coordonnées récupérées, nous pouvons positionner notre modèle virtuel dont nous discuterons les détails de conception un peu plus loin dans ce mémoire. Ces coordonnées seront naturellement converties en coordonnées OpenGL. La formule employée à cet effet (permettant une conversion d'un système de coordonnées vers un autre) est comme suit:\\ \\
+$ value_{1} = \cfrac{value - min}{max - min}.(MAX - MIN) + MIN$ \\ \\ tel que $  value\in \left[min;max\right] $ (intervalle d'entrée) et $ value_{1}\in \left[MIN;MAX\right] $ (intervalle de sortie)  \\
+
+\subsubsection{Tests de mesures et rédaction de rapport}
+Pour celle-ci, nous récupérons les valeurs de la carte de profondeur d'OpenGL ainsi que les valeurs de profondeur de la caméra RGB-D. les valeurs de la depth OpenGL seront par la suite linéarisées \footnote{Technique employée pour \guillemotleft{}~ approcher par une fonction linéaire ~\guillemotright{}.} et ensuite normalisées \footnote{Standardiser les données afin qu'elles appartiennent à l'intervalle $ \left[0;1\right] $.}. Celles renvoyées par la caméra seront uniquement normalisées. Les valeurs des deux côtés étant normalisées, les tests de mesures peuvent débuter. \par Pour mesurer le taux d'erreur entre les valeurs des deux profondeurs, nous avons opté pour trois méthodes distinctes; RMSE \footnote{Root Mean Square Error est une méthode permettant de calculer l'écart-type des erreurs enregistrées. Se reférer à cette page web pour davantage de renseignements: \url{https://www.statisticshowto.datasciencecentral.com/rmse/}}, MAPE \footnote{Mean Absolute Percentage Error est une méthode permettant une mesure des erreurs tout comme le RMSE vu plus haut. Consulter cette page web pour un maximum d'informations: \url{https://www.statisticshowto.datasciencecentral.com/mean-absolute-percentage-error-mape/} } et enfin Biais \footnote{Tout comme les deux méthodes vu précédemment, elle permet un calcul du taux d'erreur. Le lecteur peut consulter ce lien la concernant \url{http://www.chups.jussieu.fr/polys/biostats/poly/POLY.Chp.10.html}}. Une fois ces valeurs calculées pour chacun des éléments du modèle ainsi que le modèle lui-même, nous les sauvegardons dans un tableau, tableau qui sera plus tard utilisé pour le rapport. \par Par la suite, nous nous servons de Gnuplot \footnote{Un logiciel multiplateforme gratuit qui offre la possibilité de tracer des graphes en deux ou trois dimensions.} afin de tracer les graphes montrant les valeurs de depth des deux côtés en faisant attention à ne pas écraser un éventuel graphe déjà présent. 
+\par De plus, un rapport est rédigé en \LaTeX{} en mettant en avant les informations relatives à la caméra ( comme le champ de vision, la résolution, ...). A chaque fois qu'on coche sur la case \textit{Take simple measures} de l'interface graphique, le programme écrit ou réécrit sur un fichier que nous nommons \emph{Report.tex} situé dans un dossier \emph{Report} créé à cet effet. Si la caméra a déjà été testée, le programme rajoute dans la section la concernant(dans le rapport) les nouveaux résultats incluant graphe des valeurs de la depth, la distance calculée par le programme entre la caméra et le centre du modèle détecté ainsi qu'un tableau exposant les valeurs obtenues du taux d'erreurs pour les modèles et ses composants  avec les trois méthodes citées plus haut. Et ce, si et seulement si la caméra n'a pas été d'ores et déjà testée avec cette distance calculée par le programme.
+
+
+\begin{figure}[htbp]
+  %\centering
+%  \hspace{5cm}
+ \includegraphics[scale=0.25]{images/report.png} \hspace{2cm}
+  \caption{Partie du rapport généré par le programme.\label{fig-report}}
+\end{figure}
 \chapter{Cas pratiques de qualification}
 
 \section{Conception du modèle réel et du modèle virtuel}
@@ -384,192 +406,164 @@ Tout d'abord, nous avons édité le fichier \emph{infoCameras.txt} cité dans le
 
 \section{Résultats et critique}
 \subsection{Résultats obtenus}
-Ces résultats sont extraits du rapport rédigé par le programme après réalisation des tests avec les caméra Asus Xtion Pro Live et Orbbec Astra Pro avec une distance de 1.936m (distance entre la caméra et le modèle). Nous avons créé la base de données d'images templates suivant cette distance.  \\ \\
-
-\begin{table}[H]
-\begin{tabular}{c|llll}
-\cline{1-4}
-\multicolumn{1}{|l|}{\textbf{object}}   & \multicolumn{1}{l|}{\textbf{RMSE}} & \multicolumn{1}{l|}{\textbf{Bias}} & \multicolumn{1}{l|}{\textbf{MAPE}} &  \\
-\cline{1-4}
-\multicolumn{1}{|l|}{Whole model}  & \multicolumn{1}{l|}{0.645805}  & \multicolumn{1}{l|}{0.464625}  & \multicolumn{1}{l|}{0.445257}  &  \\ 
-\cline{1-4}
-\multicolumn{1}{|l|}{Blue piece}  & \multicolumn{1}{l|}{0.163108}  & \multicolumn{1}{l|}{0.0310855}  & \multicolumn{1}{l|}{0.0294527}  &  \\ 
-\cline{1-4}
-\multicolumn{1}{|l|}{Black piece}  & \multicolumn{1}{l|}{0.140734}  & \multicolumn{1}{l|}{0.0231826}  & \multicolumn{1}{l|}{0.0215494}  &  \\ 
-\cline{1-4}
-\multicolumn{1}{|l|}{Vertical magenta piece}  & \multicolumn{1}{l|}{0.301483}  & \multicolumn{1}{l|}{0.130255}  & \multicolumn{1}{l|}{-0.130255}  &  \\ 
-\cline{1-4}
-\multicolumn{1}{|l|}{Yellow piece 1}  & \multicolumn{1}{l|}{0.132736}  & \multicolumn{1}{l|}{0.019909}  & \multicolumn{1}{l|}{0.018747}  &  \\ 
-\cline{1-4}
-\multicolumn{1}{|l|}{Yellow piece 2}  & \multicolumn{1}{l|}{0.122078}  & \multicolumn{1}{l|}{0.0168138}  & \multicolumn{1}{l|}{0.0156804}  &  \\ 
-\cline{1-4}
-\multicolumn{1}{|l|}{Yellow half-sphere}  & \multicolumn{1}{l|}{0.12617}  & \multicolumn{1}{l|}{0.0215568}  & \multicolumn{1}{l|}{-0.0215568}  &  \\ 
-\cline{1-4}
-\multicolumn{1}{|l|}{Magenta pyramid}  & \multicolumn{1}{l|}{0.12583}  & \multicolumn{1}{l|}{0.0232983}  & \multicolumn{1}{l|}{-0.0232983}  &  \\ 
-\cline{1-4}
-\multicolumn{1}{|l|}{Blue pyramid}  & \multicolumn{1}{l|}{0.136497}  & \multicolumn{1}{l|}{0.0254308}  & \multicolumn{1}{l|}{-0.0254308}  &  \\ 
-\cline{1-4}
-\multicolumn{1}{|l|}{Blue  half-sphere}  & \multicolumn{1}{l|}{0.110225}  & \multicolumn{1}{l|}{0.0178525}  & \multicolumn{1}{l|}{-0.0178525}  &  \\ 
-\cline{1-4}
-\end{tabular}
-\end{table}
+Ces résultats sont extraits du rapport rédigé par le programme après réalisation des tests avec les caméras Asus Xtion Pro Live et Orbbec Astra Pro sur trois distances différentes exprimées en mètre (distance entre la caméra et le modèle). Nous avons créé la base de données d'images templates suivant une des distances.  \\ \\
 
 \vspace{2cm}
-
-Ci-dessous le tableau résumant le taux d'erreur approximatif obtenu sur des distances différentes, et ce, en  prenant en considération la valeur RMSE  calculée. \\
 
 
 \begin{table}[H]
 \centering
 \setlength\tabcolsep{2pt}
 \begin{tabular}{c|lllllllll}
-\cline{1-9}
+\cline{1-7}
 \multicolumn{1}{|l|}{}   & 
-\multicolumn{8}{l|}{\textbf{\hspace{4.5cm} Distances (m)}}    \\
-\cline{1-9}
+\multicolumn{6}{l|}{\textbf{\hspace{3cm} Distances (m)}}    \\
+\cline{1-7}
+\multicolumn{1}{|l|}{\textbf{}}   & 
+\multicolumn{2}{l|}{\textbf{1.7 }} & 
+\multicolumn{2}{l|}{\textbf{1.609}} & 
+\multicolumn{2}{l|}{\textbf{1.522}} &  \\
+
+\cline{1-7}
 \multicolumn{1}{|l|}{\textbf{object}}   & 
-\multicolumn{1}{l|}{\textbf{1.936 }} & 
-\multicolumn{1}{l|}{\textbf{1.843}} & 
-\multicolumn{1}{l|}{\textbf{1.748}} &  
-\multicolumn{1}{l|}{\textbf{1.639 }} & 
-\multicolumn{1}{l|}{\textbf{1.550}} & 
-\multicolumn{1}{l|}{\textbf{1.445}} & 
-\multicolumn{1}{l|}{\textbf{1.359}} & 
-\multicolumn{1}{l|}{\textbf{1.259}} & \\
-\cline{1-9}
+\multicolumn{1}{l|}{\textbf{Asus }} & 
+\multicolumn{1}{l|}{\textbf{Orbbec}} & 
+\multicolumn{1}{l|}{\textbf{Asus}} &  
+\multicolumn{1}{l|}{\textbf{Orbbec }} & 
+\multicolumn{1}{l|}{\textbf{Asus}} & 
+\multicolumn{1}{l|}{\textbf{Orbbec}} & \\
+
+\cline{1-7}
 \multicolumn{1}{|l|}{Whole model}  & 
-\multicolumn{1}{l|}{65\%}  &  
-\multicolumn{1}{l|}{69\%}  & 
-\multicolumn{1}{l|}{71\%}  & 
-\multicolumn{1}{l|}{76\%}  & 
-\multicolumn{1}{l|}{80\%}  & 
-\multicolumn{1}{l|}{84\%}  & 
-\multicolumn{1}{l|}{89\%}  & 
-\multicolumn{1}{l|}{94\%}  &  \\ 
-\cline{1-9}
+\multicolumn{1}{l|}{51\%}  &  
+\multicolumn{1}{l|}{81\%}  & 
+\multicolumn{1}{l|}{90\%}  & 
+\multicolumn{1}{l|}{40\%}  & 
+\multicolumn{1}{l|}{91\%}  & 
+\multicolumn{1}{l|}{75\%}  &  \\ 
+\cline{1-7}
 \multicolumn{1}{|l|}{Blue piece}  &
-\multicolumn{1}{l|}{16\%}  &
-\multicolumn{1}{l|}{17\%}  & 
-\multicolumn{1}{l|}{17\%} & 
-\multicolumn{1}{l|}{18\%}  & 
-\multicolumn{1}{l|}{18\%}  &  
-\multicolumn{1}{l|}{21\%}  & 
-\multicolumn{1}{l|}{21\%}  &
-\multicolumn{1}{l|}{22\%}   &  \\ 
-\cline{1-9}
+\multicolumn{1}{l|}{55\%}  &
+\multicolumn{1}{l|}{45\%}  & 
+\multicolumn{1}{l|}{91\%} & 
+\multicolumn{1}{l|}{50\%}  & 
+\multicolumn{1}{l|}{94\%}  &  
+\multicolumn{1}{l|}{41\%}  &   \\ 
+\cline{1-7}
 \multicolumn{1}{|l|}{Black piece}  & 
-\multicolumn{1}{l|}{14\%}  & 
-\multicolumn{1}{l|}{15\%}  & 
-\multicolumn{1}{l|}{15\%} & 
-\multicolumn{1}{l|}{14\%}  & 
-\multicolumn{1}{l|}{17\%}  &
-\multicolumn{1}{l|}{16\%}  & 
-\multicolumn{1}{l|}{18\%}  & 
-\multicolumn{1}{l|}{18\%}  &  \\ 
-\cline{1-9}
+\multicolumn{1}{l|}{56\%}  & 
+\multicolumn{1}{l|}{46\%}  & 
+\multicolumn{1}{l|}{91\%} & 
+\multicolumn{1}{l|}{50\%}  & 
+\multicolumn{1}{l|}{94\%}  &
+\multicolumn{1}{l|}{42\%}  &  \\ 
+\cline{1-7}
 \multicolumn{1}{|l|}{Vertical magenta piece}  & 
-\multicolumn{1}{l|}{30\%}  & 
-\multicolumn{1}{l|}{30\%}  & 
-\multicolumn{1}{l|}{30\%} & 
-\multicolumn{1}{l|}{31\%}  & 
-\multicolumn{1}{l|}{31\%}  & 
-\multicolumn{1}{l|}{31\%}  & 
-\multicolumn{1}{l|}{32\%}  &  
-\multicolumn{1}{l|}{38\%}  & \\ 
-\cline{1-9}
+\multicolumn{1}{l|}{55\%}  & 
+\multicolumn{1}{l|}{46\%}  & 
+\multicolumn{1}{l|}{91\%} & 
+\multicolumn{1}{l|}{50\%}  & 
+\multicolumn{1}{l|}{94\%}  & 
+\multicolumn{1}{l|}{41\%}  & \\ 
+\cline{1-7}
 \multicolumn{1}{|l|}{Yellow piece 1}  & 
-\multicolumn{1}{l|}{13\%}  & 
-\multicolumn{1}{l|}{13\%}  & 
-\multicolumn{1}{l|}{13\%}  & 
-\multicolumn{1}{l|}{13\%}  & 
-\multicolumn{1}{l|}{13\%}  & 
-\multicolumn{1}{l|}{13\%}  & 
-\multicolumn{1}{l|}{13\%}  & 
-\multicolumn{1}{l|}{13\%}  & \\ 
-\cline{1-9}
+\multicolumn{1}{l|}{28\%}  & 
+\multicolumn{1}{l|}{98\%}  & 
+\multicolumn{1}{l|}{93\%}  & 
+\multicolumn{1}{l|}{22\%}  & 
+\multicolumn{1}{l|}{99\%}  & 
+\multicolumn{1}{l|}{97\%}  & \\ 
+\cline{1-7}
 \multicolumn{1}{|l|}{Yellow piece 2}  & 
-\multicolumn{1}{l|}{12\%}  & 
-\multicolumn{1}{l|}{12\%}  & 
-\multicolumn{1}{l|}{12\%}  &  
-\multicolumn{1}{l|}{13\%}  & 
-\multicolumn{1}{l|}{13\%}  & 
-\multicolumn{1}{l|}{14\%}  & 
-\multicolumn{1}{l|}{12\%}  & 
-\multicolumn{1}{l|}{15\%}  & \\ 
-\cline{1-9}
+\multicolumn{1}{l|}{28\%}  & 
+\multicolumn{1}{l|}{98\%}  & 
+\multicolumn{1}{l|}{94\%}  &  
+\multicolumn{1}{l|}{48\%}  & 
+\multicolumn{1}{l|}{99\%}  & 
+\multicolumn{1}{l|}{97\%}  & \\ 
+\cline{1-7}
 \multicolumn{1}{|l|}{Yellow half-sphere}  & 
-\multicolumn{1}{l|}{13\%}  & 
-\multicolumn{1}{l|}{12\%}  & 
-\multicolumn{1}{l|}{12\%}  &  
-\multicolumn{1}{l|}{14\%}  & 
-\multicolumn{1}{l|}{15\%}  & 
-\multicolumn{1}{l|}{14\%}  & 
-\multicolumn{1}{l|}{13\%}  & 
-\multicolumn{1}{l|}{15\%}  & 
-\\ 
-\cline{1-9}
+\multicolumn{1}{l|}{54\%}  & 
+\multicolumn{1}{l|}{45\%}  & 
+\multicolumn{1}{l|}{90\%}  &  
+\multicolumn{1}{l|}{51\%}  & 
+\multicolumn{1}{l|}{94\%}  & 
+\multicolumn{1}{l|}{37\%}  & \\ 
+\cline{1-7}
 \multicolumn{1}{|l|}{Magenta pyramid}  & 
-\multicolumn{1}{l|}{13\%}  & 
-\multicolumn{1}{l|}{14\%}  & 
-\multicolumn{1}{l|}{14\%}  &  
-\multicolumn{1}{l|}{14\%}  & 
-\multicolumn{1}{l|}{14\%}  & 
-\multicolumn{1}{l|}{15\%}  & 
-\multicolumn{1}{l|}{16\%}  & 
-\multicolumn{1}{l|}{16\%}  & \\ 
-\cline{1-9}
+\multicolumn{1}{l|}{53\%}  & 
+\multicolumn{1}{l|}{46\%}  & 
+\multicolumn{1}{l|}{90\%}  &  
+\multicolumn{1}{l|}{51\%}  & 
+\multicolumn{1}{l|}{94\%}  & 
+\multicolumn{1}{l|}{37\%}  & \\ 
+\cline{1-7}
 \multicolumn{1}{|l|}{Blue pyramid}  & 
-\multicolumn{1}{l|}{14\%}  & 
-\multicolumn{1}{l|}{14\%}  & 
-\multicolumn{1}{l|}{13\%}  &  
-\multicolumn{1}{l|}{13\%}  & 
-\multicolumn{1}{l|}{14\%}  & 
-\multicolumn{1}{l|}{16\%}  & 
-\multicolumn{1}{l|}{16\%}  & 
-\multicolumn{1}{l|}{17\%}  & \\ 
-\cline{1-9}
+\multicolumn{1}{l|}{53\%}  & 
+\multicolumn{1}{l|}{46\%}  & 
+\multicolumn{1}{l|}{91\%}  &  
+\multicolumn{1}{l|}{50\%}  & 
+\multicolumn{1}{l|}{94\%}  & 
+\multicolumn{1}{l|}{38\%}  & \\ 
+\cline{1-7}
 \multicolumn{1}{|l|}{Blue  half-sphere}  & 
-\multicolumn{1}{l|}{11\%}  & 
-\multicolumn{1}{l|}{11\%}  & 
-\multicolumn{1}{l|}{12\%}  &  
-\multicolumn{1}{l|}{12\%}  & 
-\multicolumn{1}{l|}{13\%}  & 
-\multicolumn{1}{l|}{14\%}  & 
-\multicolumn{1}{l|}{15\%}  & 
-\multicolumn{1}{l|}{14\%}  & \\ 
-\cline{1-9}
+\multicolumn{1}{l|}{55\%}  & 
+\multicolumn{1}{l|}{45\%}  & 
+\multicolumn{1}{l|}{90\%}  &  
+\multicolumn{1}{l|}{52\%}  & 
+\multicolumn{1}{l|}{94\%}  & 
+\multicolumn{1}{l|}{37\%}  & \\ 
+\cline{1-7}
 \multicolumn{1}{|l|}{\textbf{Average rate}} & 
-\multicolumn{1}{l|}{\textbf{20.1\%}}  & 
-\multicolumn{1}{l|}{\textbf{20.7\%}}  &  
-\multicolumn{1}{l|}{\textbf{20.9\%}}  & 
-\multicolumn{1}{l|}{\textbf{21.8\%}}  & 
-\multicolumn{1}{l|}{\textbf{22.8\%}}  & 
-\multicolumn{1}{l|}{\textbf{23.8\%}}  & 
-\multicolumn{1}{l|}{\textbf{24.5\%}}  &  
-\multicolumn{1}{l|}{\textbf{26.2\%}}  &\\ 
-\cline{1-9}
+\multicolumn{1}{l|}{\textbf{48.8\%}}  & 
+\multicolumn{1}{l|}{\textbf{59.6\%}}  &  
+\multicolumn{1}{l|}{\textbf{91.1\%}}  & 
+\multicolumn{1}{l|}{\textbf{46.4\%}}  & 
+\multicolumn{1}{l|}{\textbf{94.7\%}}  & 
+\multicolumn{1}{l|}{\textbf{54.2\%}}  & \\ 
+\cline{1-7}
 
 \end{tabular}
 \end{table}
 \vspace{2cm} 
-\par On peut observer aisément un taux d'erreur de plus en plus élevé pour le modèle en entier. Pour les autres éléments, le taux reste pratiquement constant. 
+\par On peut aisément observer un taux d'erreur moins important avec la Orbbec.
+Les taux restent néanmoins très élevés.
 
 \subsection{Critiques}
-Comme nous doutons de la méthode employée pour extraire les données OpenGL correspondantes aux données de la depth de la caméra (données extraites aux mêmes pixels), nous pensons qu'il est tout à fait normal que le taux soit si élevé. Toutefois, comme après chaque changement de distance (ie: la caméra se rapproche du modèle observé), le modèle 3D subit un changement d'échelle afin qu'il soit superposé au modèle réel. Ainsi, la valeur de la coordonnée $z$ de chaque pixel du modèle 3D subit pareillement ce changement (devient de plus en plus grande).
+\par Les taux anormalement élevés observés dans la section précédente nous prélèvent des doutes sur deux points principaux qui pourraient être omis dans l'application.
+\begin{itemize}
+		\item {Fiabilité des valeurs de la depth OpenGL extraites.}	
+		\item {Aire de détection du modèle 3D non conforme à celle du modèle réel en terme de coordonnées.} 		
+\end{itemize}
 
+\par Pour l'heure, à moins que nous ignorons d'autres points, nous ne voyons pas d'autres éléments qui pourraient impacter ces résultats. 
 
 
 \chapter{Conclusion et Perspectives\label{chap-conclusion}}
-\par Dans ce rapport, nous avons présenté l'outil que nous avons développé pour la qualification de caméras RGB-D. Comme nous avons pu le constater, ce dernier recense des erreurs au niveau des mesures. En effet, des données OpenGL qui ne sont pas forcément fiables, particulièrement lors de la mise à l'échelle du modèle 3D, influent considérablement sur les résultats que nous avons vus lors du précédent chapitre.
-\par En perspectives, nous souhaiterions vérifier de manière plus pointilleuse les données OpenGL extraites et améliorer la mise à l'échelle du modèle 3D de manière à ne pas impacter le taux d'erreur.
-Dans ce cas, la qualification pourra être effectuée dans des conditions permettant une meilleure comparaison entre les différents modèles de caméras.  
-\par Afin de parvenir à nos objectifs premiers, il nous faut effectuer les tests de mesures sur la colonne vertébrale d'un vrai patient. Pour ce faire, il nous faut rechercher un modèle 3D de colonne vertébrale ou un modèle s'en rapprochant le plus possible. 
+\par Dans ce rapport, nous avons présenté l'outil que nous avons développé à ce jour pour la qualification de caméras RGB-D. D'après les résultats exposés précédemment, nous pouvons admettre que la \texttt{Orbbec Astra Pro} l'emporte sur la \texttt{Asus Xtion Pro Live} en terme de précision dans la mesure. 
+\par Cependant, comme nous avons pu le constater sur les deux caméras, cette application renvoyait des taux d'erreur excessivement élevés, ce qui nous a questionné sur sa fiabilité. Ainsi, nous avons établis deux éléments qui pourraient potentiellement être à l'origine de cette anomalie. 
+\begin{itemize}
+		\item {Fiabilité de la depth OpenGL.}	
+		\item {Non conformité des coordonnées des zones détectées entre le modèle réel et le modèle virtuel.} 		
+\end{itemize} 
 
-\par L'application résultante devra être en mesure de détecter la colonne vertébrale de la personne posant de dos à la caméra RGB-D, principalement ceux atteints de la scoliose. Dans un premier lieu, la localisation de l'épine dorsale va être effectuée en se basant sur du Machine Learning. Par la suite, nous nous attendons à ce qu'elle puisse modéliser la colonne en partant d'un modèle 3D. 
+\vspace{0.5cm}
+\par En perspectives, nous souhaiterions vérifier de manière plus pointilleuse les données OpenGL extraites ainsi que la correspondance entre les deux aires de détection.
+Dans ce cas, la qualification pourra être effectuée dans des conditions permettant une meilleure comparaison entre les différents modèles de caméras.  
+\par Une fois les conditions réunies, nous pensons effectuer les tests de mesures sur la colonne vertébrale d'un vrai patient. Pour ce faire, il nous faut rechercher un modèle 3D de colonne vertébrale ou un modèle s'en rapprochant le plus possible. 	
+
+\par L'application résultante devra être en mesure de détecter la colonne vertébrale de la personne posant de dos à la caméra RGB-D. Les personnes qui suscitent notre intérêt sont principalement ceux atteints de scoliose. Dans un premier lieu, la localisation de l'épine dorsale va être effectuée en se basant sur du Machine Learning. Par la suite, une fois la colonne vertébrale détectée, le programme devra être apte à bien positionner le modèle 3D de manière à ce qu'il corresponde à l'épine dorsale du patient observé. Enfin, les tests de mesures pourront être lancés.
+
 
 \nocite{*}
-%	\bibliographystyle{alpha}
+\bibliographystyle{alpha}
+\bibliography{memoire}
+%\nocite{*}
+%\bibliographystyle{unsrt}
+%\bibliographystyle{alpha}
+
 %\bibliography{memoire}
-\printbibliography
+%\printbibliography
+
 \end{document}
 
